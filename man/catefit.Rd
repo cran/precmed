@@ -87,10 +87,10 @@ he baseline survivor function), \code{'aft (exponential)'}, \code{'aft (weibull)
 \code{'aft (lognormal)'} or \code{'aft (loglogistic)'} (accelerated failure time model
 with different distributions for y variable). Default is \code{'breslow'}.}
 
-\item{minPS}{A numerical value (in [0, 1]) below which estimated propensity scores should be
+\item{minPS}{A numerical value (in `[0, 1]`) below which estimated propensity scores should be
 truncated. Default is \code{0.01}.}
 
-\item{maxPS}{A numerical value (in (0, 1]) above which estimated propensity scores should be
+\item{maxPS}{A numerical value (in `(0, 1]`) above which estimated propensity scores should be
 truncated. Must be strictly greater than \code{minPS}. Default is \code{0.99}.}
 
 \item{followup.time}{A column name in \code{data} specifying the maximum follow-up time,
@@ -104,7 +104,7 @@ maximum survival time in the data.}
 \item{higher.y}{A logical value indicating whether higher (\code{TRUE}) or
 lower (\code{FALSE}) values of the outcome are more desirable. Default is \code{TRUE}.}
 
-\item{prop.cutoff}{A vector of numerical values (in (0, 1]) specifying percentiles of the
+\item{prop.cutoff}{A vector of numerical values (in `(0, 1]`) specifying percentiles of the
 estimated log CATE scores to define nested subgroups. Each element represents the cutoff to
 separate observations in nested subgroups (below vs above cutoff).
 The length of \code{prop.cutoff} is the number of nested subgroups.
@@ -222,8 +222,7 @@ coef(fit_2)
 \references{
 Yadlowsky, S., Pellegrini, F., Lionetto, F., Braune, S., & Tian, L. (2020).
 \emph{Estimation and validation of ratio-based conditional average treatment effects using
-observational data. Journal of the American Statistical Association, 1-18.}
-\url{https://www.tandfonline.com/doi/full/10.1080/01621459.2020.1772080}
+observational data. Journal of the American Statistical Association, 1-18.} DOI: 10.1080/01621459.2020.1772080.
 }
 \seealso{
 \code{\link{catecv}()}

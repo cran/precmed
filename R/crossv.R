@@ -44,9 +44,9 @@
 #' he baseline survivor function), \code{'aft (exponential)'}, \code{'aft (weibull)'},
 #' \code{'aft (lognormal)'} or \code{'aft (loglogistic)'} (accelerated failure time model
 #' with different distributions for y variable). Default is \code{'breslow'}.
-#' @param minPS A numerical value (in [0, 1]) below which estimated propensity scores should be
+#' @param minPS A numerical value (in `[0, 1]`) below which estimated propensity scores should be
 #' truncated. Default is \code{0.01}.
-#' @param maxPS A numerical value (in (0, 1]) above which estimated propensity scores should be
+#' @param maxPS A numerical value (in `(0, 1]`) above which estimated propensity scores should be
 #' truncated. Must be strictly greater than \code{minPS}. Default is \code{0.99}.
 #' @param followup.time A column name in \code{data} specifying the maximum follow-up time,
 #' interpreted as the potential censoring time. Only applies for survival outcomes.
@@ -56,13 +56,13 @@
 #' maximum survival time in the data.
 #' @param higher.y A logical value indicating whether higher (\code{TRUE}) or
 #' lower (\code{FALSE}) values of the outcome are more desirable. Default is \code{TRUE}.
-#' @param prop.cutoff A vector of numerical values (in (0, 1]) specifying percentiles of the
+#' @param prop.cutoff A vector of numerical values (in `(0, 1]`) specifying percentiles of the
 #' estimated log CATE scores to define nested subgroups. Each element represents the cutoff to
 #' separate observations in nested subgroups (below vs above cutoff).
 #' The length of \code{prop.cutoff} is the number of nested subgroups.
 #' An equally-spaced sequence of proportions ending with 1 is recommended.
 #' Default is \code{seq(0.5, 1, length = 6)}.
-#' @param prop.multi A vector of numerical values (in [0, 1]) specifying percentiles of the
+#' @param prop.multi A vector of numerical values (in `[0, 1]`) specifying percentiles of the
 #' estimated log CATE scores to define mutually exclusive subgroups.
 #' It should start with 0, end with 1, and be of \code{length(prop.multi) > 2}.
 #' Each element represents the cutoff to separate the observations into
@@ -70,7 +70,7 @@
 #' Default is \code{c(0, 1/3, 2/3, 1)}.
 #' @param abc A logical value indicating whether the area between curves (ABC) should be calculated
 #' at each cross-validation iterations, for each \code{score.method}. Default is \code{TRUE}.
-#' @param train.prop A numerical value (in (0, 1)) indicating the proportion of total data used
+#' @param train.prop A numerical value (in `(0, 1)`) indicating the proportion of total data used
 #' for training. Default is \code{3/4}.
 #' @param cv.n A positive integer value indicating the number of cross-validation iterations.
 #' Default is \code{10}.
@@ -136,8 +136,7 @@
 #'
 #' @references Yadlowsky, S., Pellegrini, F., Lionetto, F., Braune, S., & Tian, L. (2020).
 #' \emph{Estimation and validation of ratio-based conditional average treatment effects using
-#' observational data. Journal of the American Statistical Association, 1-18.}
-#' \url{https://www.tandfonline.com/doi/full/10.1080/01621459.2020.1772080}
+#' observational data. Journal of the American Statistical Association, 1-18.} DOI: 10.1080/01621459.2020.1772080.
 #'
 #' @seealso \code{\link{catefit}()} function and \code{\link{boxplot}()}, \code{\link{abc}} methods for
 #' \code{"precmed"} objects.
@@ -180,7 +179,6 @@
 #' boxplot(cate_2, ylab = "RMTL ratio of drug1 vs drug0 in each subgroup")
 #' abc(cate_2)
 #'
-#'
 #' }
 #'
 #' @export
@@ -191,7 +189,6 @@
 #' @importFrom glmnet cv.glmnet glmnet
 #' @importFrom graphics hist lines
 #' @importFrom MASS glm.nb
-#' @importFrom MESS auc
 #' @importFrom randomForestSRC rfsrc predict.rfsrc
 #' @importFrom stats as.formula coef glm median model.frame model.matrix model.offset model.response na.omit optim pchisq predict qnorm quantile sd var
 #' @importFrom stringr str_replace str_extract str_detect
@@ -293,13 +290,13 @@ catecv <- function(response,
 #' lower (\code{FALSE}) values of the outcome are more desirable. Default is \code{TRUE}.
 #' @param abc A logical value indicating whether the area between curves (ABC) should be calculated
 #' at each cross-validation iterations, for each \code{score.method}. Default is \code{TRUE}.
-#' @param prop.cutoff A vector of numerical values (in (0, 1]) specifying percentiles of the
+#' @param prop.cutoff A vector of numerical values (in `(0, 1]`) specifying percentiles of the
 #' estimated log CATE scores to define nested subgroups. Each element represents the cutoff to
 #' separate observations in nested subgroups (below vs above cutoff).
 #' The length of \code{prop.cutoff} is the number of nested subgroups.
 #' An equally-spaced sequence of proportions ending with 1 is recommended.
 #' Default is \code{seq(0.5, 1, length = 6)}.
-#' @param prop.multi A vector of numerical values (in [0, 1]) specifying percentiles of the
+#' @param prop.multi A vector of numerical values (in `[0, 1]`) specifying percentiles of the
 #' estimated log CATE scores to define mutually exclusive subgroups.
 #' It should start with 0, end with 1, and be of \code{length(prop.multi) > 2}.
 #' Each element represents the cutoff to separate the observations into
@@ -311,11 +308,11 @@ catecv <- function(response,
 #' \code{'lasso'} for a logistic regression with main effects and LASSO penalization on
 #' two-way interactions (added to the model if interactions are not specified in \code{ps.model}).
 #' Relevant only when \code{ps.model} has more than one variable.
-#' @param minPS A numerical value (in [0, 1]) below which estimated propensity scores should be
+#' @param minPS A numerical value (in `[0, 1]`) below which estimated propensity scores should be
 #' truncated. Default is \code{0.01}.
-#' @param maxPS A numerical value (in (0, 1]) above which estimated propensity scores should be
+#' @param maxPS A numerical value (in `(0, 1]`) above which estimated propensity scores should be
 #' truncated. Must be strictly greater than \code{minPS}. Default is \code{0.99}.
-#' @param train.prop A numerical value (in (0, 1)) indicating the proportion of total data used
+#' @param train.prop A numerical value (in `(0, 1)`) indicating the proportion of total data used
 #' for training. Default is \code{3/4}.
 #' @param cv.n A positive integer value indicating the number of cross-validation iterations.
 #' Default is \code{10}.
@@ -368,117 +365,116 @@ catecv <- function(response,
 #'
 #' @return Returns a list containing the following components saved as a \code{"precmed"} object:
 #' \itemize{
-#'  \item{\code{ate.randomForest}: }{A list of ATE output measured by the RMTL ratio if
-#'  \code{score.method} includes \code{'randomForest'}:}
+#'  \item{\code{ate.randomForest}: }A list of ATE output measured by the RMTL ratio if
+#'  \code{score.method} includes \code{'randomForest'}:
 #'  \itemize{
-#'     \item{\code{ate.est.train.high.cv}: }{A matrix of numerical values with
+#'     \item{\code{ate.est.train.high.cv}: }A matrix of numerical values with
 #'     \code{length(prop.cutoff)} rows and \code{cv.n} columns.
 #'     The ith column/jth row cell contains the estimated ATE in the nested subgroup of high responders
 #'     defined by CATE score above (if \code{higher.y = FALSE}) or below (if \code{higher.y = TRUE}) the
 #'     \code{prop.cutoff[j]}x100\% percentile of the estimated CATE score in the training set in the ith
-#'     cross-validation iteration.}
-#'     \item{\code{ate.est.train.low.cv}: }{A matrix of numerical values with
+#'     cross-validation iteration.
+#'     \item{\code{ate.est.train.low.cv}: }A matrix of numerical values with
 #'     \code{length(prop.cutoff) - 1} rows and \code{cv.n} columns.
 #'     TThe ith column/jth row cell contains the estimated ATE in the nested subgroup of low responders
 #'     defined by CATE score below (if \code{higher.y = FALSE}) or above (if \code{higher.y = TRUE}) the
 #'     \code{prop.cutoff[j]}x100\% percentile of the estimated CATE score in the training set in the ith
-#'     cross-validation iteration.}
-#'     \item{\code{ate.est.valid.high.cv}: }{Same as \code{ate.est.train.high.cv},
-#'     but in the validation set.}
-#'     \item{\code{ate.est.valid.low.cv}: }{Same as \code{ate.est.train.low.cv},
-#'     but in the validation set.}
-#'     \item{\code{ate.est.train.group.cv}: }{A matrix of numerical values with
+#'     cross-validation iteration.
+#'     \item{\code{ate.est.valid.high.cv}: }Same as \code{ate.est.train.high.cv},
+#'     but in the validation set.
+#'     \item{\code{ate.est.valid.low.cv}: }Same as \code{ate.est.train.low.cv},
+#'     but in the validation set.
+#'     \item{\code{ate.est.train.group.cv}: }A matrix of numerical values with
 #'     \code{length(prop.multi) - 1} rows and \code{cv.n} columns.
 #'     The ith column contains the estimated ATE in \code{length(prop.multi) - 1}
 #'     mutually exclusive subgroups defined by \code{prop.multi} in the training set in ith
-#'     cross-validation iteration.}
-#'     \item{\code{ate.est.valid.group.cv}: }{Same as \code{ate.est.train.group.cv}, but in the
-#'     validation set.}
-#'     \item{\code{abc.valid}: }{A vector of numerical values of length \code{cv.n},
+#'     cross-validation iteration.
+#'     \item{\code{ate.est.valid.group.cv}: }Same as \code{ate.est.train.group.cv}, but in the
+#'     validation set.
+#'     \item{\code{abc.valid}: }A vector of numerical values of length \code{cv.n},
 #'     The ith element returns the ABC of the validation curve in the ith cross-validation
-#'     iteration. Only returned if \code{abc = TRUE}.}
+#'     iteration. Only returned if \code{abc = TRUE}.
 #'  }
-#'  \item{\code{ate.boosting}: }{A list of results similar to \code{ate.randomForest} output
-#'  if \code{score.method} includes \code{'boosting'}.}
-#'  \item{\code{ate.poisson}: }{A list of results similar to \code{ate.randomForest} output
-#'  if \code{score.method} includes \code{'poisson'}.}
-#'  \item{\code{ate.twoReg}: }{A list of results similar to \code{ate.randomForest} output
-#'  if \code{score.method} includes \code{'twoReg'}.}
-#'  \item{\code{ate.contrastReg}: }{A list of results similar to \code{ate.randomForest} output
+#'  \item{\code{ate.boosting}: }A list of results similar to \code{ate.randomForest} output
+#'  if \code{score.method} includes \code{'boosting'}.
+#'  \item{\code{ate.poisson}: }A list of results similar to \code{ate.randomForest} output
+#'  if \code{score.method} includes \code{'poisson'}.
+#'  \item{\code{ate.twoReg}: }A list of results similar to \code{ate.randomForest} output
+#'  if \code{score.method} includes \code{'twoReg'}.
+#'  \item{\code{ate.contrastReg}: }A list of results similar to \code{ate.randomForest} output
 #'  if \code{score.method} includes \code{'contrastReg'}.
-#'  This method has an additional element in the list of results:}
+#'  This method has an additional element in the list of results:
 #'  \itemize{
-#'     \item{\code{converge.contrastReg.cv}: }{A vector of logical value of length \code{cv.n}.
+#'     \item{\code{converge.contrastReg.cv}: }A vector of logical value of length \code{cv.n}.
 #'     The ith element indicates whether the algorithm converged in the ith cross-validation
-#'     iteration.}
+#'     iteration.
 #'  }
-#'  \item{\code{hr.randomForest}: }{A list of adjusted hazard ratio if \code{score.method} includes
-#'  \code{'randomForest'}:}
+#'  \item{\code{hr.randomForest}: }A list of adjusted hazard ratio if \code{score.method} includes
+#'  \code{'randomForest'}:
 #'  \itemize{
-#'     \item{\code{hr.est.train.high.cv}: }{A matrix of numerical values with
+#'     \item{\code{hr.est.train.high.cv}: }A matrix of numerical values with
 #'     \code{length(prop.cutoff)} rows and \code{cv.n} columns.
 #'     The ith column/jth row cell contains the estimated HR in the nested subgroup of high responders
 #'     defined by CATE score above (if \code{higher.y = FALSE}) or below (if \code{higher.y = TRUE}) the
 #'     \code{prop.cutoff[j]}x100\% percentile of the estimated CATE score in the training set in the ith
-#'     cross-validation iteration.}
-#'     \item{\code{hr.est.train.low.cv}: }{A matrix of numerical values with
+#'     cross-validation iteration.
+#'     \item{\code{hr.est.train.low.cv}: }A matrix of numerical values with
 #'     \code{length(prop.cutoff) - 1} rows and \code{cv.n} columns.
 #'     TThe ith column/jth row cell contains the estimated HR in the nested subgroup of low responders
 #'     defined by CATE score below (if \code{higher.y = FALSE}) or above (if \code{higher.y = TRUE}) the
 #'     \code{prop.cutoff[j]}x100\% percentile of the estimated CATE score in the training set in the ith
-#'     cross-validation iteration.}
-#'     \item{\code{hr.est.valid.high.cv}: }{Same as \code{hr.est.train.high.cv},
-#'     but in the validation set.}
-#'     \item{\code{hr.est.valid.low.cv}: }{Same as \code{hr.est.train.low.cv},
-#'     but in the validation set.}
-#'     \item{\code{hr.est.train.group.cv}: }{A matrix of numerical values with
+#'     cross-validation iteration.
+#'     \item{\code{hr.est.valid.high.cv}: }Same as \code{hr.est.train.high.cv},
+#'     but in the validation set.
+#'     \item{\code{hr.est.valid.low.cv}: }Same as \code{hr.est.train.low.cv},
+#'     but in the validation set.
+#'     \item{\code{hr.est.train.group.cv}: }A matrix of numerical values with
 #'     \code{length(prop.multi) - 1} rows and \code{cv.n} columns.
 #'     The ith column contains the estimated HR in \code{length(prop.multi) - 1}
 #'     mutually exclusive subgroups defined by \code{prop.multi} in the training set in ith
-#'     cross-validation iteration.}
-#'     \item{\code{hr.est.valid.group.cv}: }{Same as \code{hr.est.train.group.cv}, but in the
-#'     validation set.}
+#'     cross-validation iteration.
+#'     \item{\code{hr.est.valid.group.cv}: }Same as \code{hr.est.train.group.cv}, but in the
+#'     validation set.
 #'  }
-#'  \item{\code{hr.boosting}: }{A list of results similar to \code{hr.randomForest} output
-#'  if \code{score.method} includes \code{'boosting'}.}
-#'  \item{\code{hr.poisson}: }{A list of results similar to \code{hr.randomForest} output
-#'  if \code{score.method} includes \code{'poisson'}.}
-#'  \item{\code{hr.twoReg}: }{A list of results similar to \code{hr.randomForest} output
-#'  if \code{score.method} includes \code{'twoReg'}.}
-#'  \item{\code{hr.contrastReg}: }{A list of results similar to \code{hr.randomForest} output
+#'  \item{\code{hr.boosting}: }A list of results similar to \code{hr.randomForest} output
+#'  if \code{score.method} includes \code{'boosting'}.
+#'  \item{\code{hr.poisson}: }A list of results similar to \code{hr.randomForest} output
+#'  if \code{score.method} includes \code{'poisson'}.
+#'  \item{\code{hr.twoReg}: }A list of results similar to \code{hr.randomForest} output
+#'  if \code{score.method} includes \code{'twoReg'}.
+#'  \item{\code{hr.contrastReg}: }A list of results similar to \code{hr.randomForest} output
 #'  if \code{score.method} includes \code{'contrastReg'}.
-#'  \item{\code{props}: }{A list of 3 elements:}
+#'  \item{\code{props}: }A list of 3 elements:
 #'  \itemize{
-#'     \item{\code{prop.onlyhigh}: }{The original argument \code{prop.cutoff},
-#'     reformatted as necessary.}
-#'     \item{\code{prop.bi}: }{The original argument \code{prop.cutoff},
-#'     similar to \code{prop.onlyhigh} but reformatted to exclude 1.}
-#'     \item{\code{prop.multi}: }{The original argument \code{prop.multi},
-#'     reformatted as necessary to include 0 and 1.}
+#'     \item{\code{prop.onlyhigh}: }The original argument \code{prop.cutoff},
+#'     reformatted as necessary.
+#'     \item{\code{prop.bi}: }The original argument \code{prop.cutoff},
+#'     similar to \code{prop.onlyhigh} but reformatted to exclude 1.
+#'     \item{\code{prop.multi}: }The original argument \code{prop.multi},
+#'     reformatted as necessary to include 0 and 1.
 #'  }
-#'  \item{\code{overall.ate.train}: }{A vector of numerical values of length \code{cv.n}.
+#'  \item{\code{overall.ate.train}: }A vector of numerical values of length \code{cv.n}.
 #'  The ith element contains the ATE (RMTL ratio) in the training set of the ith cross-validation
-#'  iteration, estimated with the doubly robust estimator.}
-#'  \item{\code{overall.hr.train}: }{A vector of numerical values of length \code{cv.n}.
+#'  iteration, estimated with the doubly robust estimator.
+#'  \item{\code{overall.hr.train}: }A vector of numerical values of length \code{cv.n}.
 #'  The ith element contains the ATE (HR) in the training set of the ith cross-validation
-#'  iteration.}
-#'  \item{\code{overall.ate.valid}: }{A vector of numerical values of length \code{cv.n}.
+#'  iteration.
+#'  \item{\code{overall.ate.valid}: }A vector of numerical values of length \code{cv.n}.
 #'  The ith element contains the ATE (RMTL ratio) in the validation set of the ith cross-validation
-#'  iteration, estimated with the doubly robust estimator.}
-#'  \item{\code{overall.hr.valid}: }{A vector of numerical values of length \code{cv.n}.
-#'  The ith element contains the ATE (HR) in the validation set of the ith cross-validation
-#'  iteration.}
-#'  \item{\code{errors/warnings}: }{A nested list of errors and warnings that were wrapped during the
+#'  iteration, estimated with the doubly robust estimator.
+#' \item{\code{overall.hr.valid}: }A vector of numerical values of length \code{cv.n}.
+#' The ith element contains the ATE (HR) in the validation set of the ith cross-validation
+#' iteration.
+#'  \item{\code{errors/warnings}: }A nested list of errors and warnings that were wrapped during the
 #'  calculation of ATE. Errors and warnings are organized by \code{score.method} and
-#'  position in the CV flow.}
-#'  \item{\code{higher.y}: }{The original \code{higher.y} argument.}
-#'  \item{\code{abc}: }{The original \code{abc} argument.}
-#'  \item{\code{cv.n}: }{The original \code{cv.n} argument.}
-#'  \item{\code{response}: }{The type of response. Always 'survival' for this function.}
-#'  \item{\code{formulas}:}{A list of 3 elements: (1) \code{cate.model} argument,
+#'  position in the CV flow.
+#'  \item{\code{higher.y}: }The original \code{higher.y} argument.
+#'  \item{\code{abc}: }The original \code{abc} argument.
+#'  \item{\code{cv.n}: }The original \code{cv.n} argument.
+#'  \item{\code{response}: }The type of response. Always 'survival' for this function.
+#'  \item{\code{formulas}:}A list of 3 elements: (1) \code{cate.model} argument,
 #'  (2) \code{ps.model} argument and (3) original labels of the left-hand side variable in
-#'  \code{ps.model} (treatment) if it was not 0/1.}
-#' }
+#'  \code{ps.model} (treatment) if it was not 0/1.
 #' }
 #' @details The CATE score represents an individual-level treatment effect expressed as the
 #' restricted mean survival time (RMTL) ratio) for survival outcomes. It can be estimated with boosting,
@@ -519,8 +515,7 @@ catecv <- function(response,
 #'
 #' @references Yadlowsky, S., Pellegrini, F., Lionetto, F., Braune, S., & Tian, L. (2020).
 #' \emph{Estimation and validation of ratio-based conditional average treatment effects using
-#' observational data. Journal of the American Statistical Association, 1-18.}
-#' \url{https://www.tandfonline.com/doi/full/10.1080/01621459.2020.1772080}
+#' observational data. Journal of the American Statistical Association, 1-18.}. DOI: 10.1080/01621459.2020.1772080.
 #'
 #' @seealso \code{\link{catefitsurv}()} function and \code{\link{boxplot}()}, \code{\link{abc}} methods for
 #' \code{"precmed"} objects.
@@ -557,10 +552,9 @@ catecv <- function(response,
 #' @importFrom gbm gbm gbm.perf predict.gbm
 #' @importFrom gam gam
 #' @importFrom stringr str_replace
-#' @importFrom MESS auc
 #' @importFrom glmnet cv.glmnet glmnet
 #' @importFrom dplyr %>%
-
+#'
 catecvsurv <- function(data,
                        score.method,
                        cate.model,
@@ -599,9 +593,10 @@ catecvsurv <- function(data,
 
   if (verbose >= 1) t.start <- Sys.time()
 
-  #### CHECK ARGUMENTS ####
+  # Check arguments
   arg.checks(
-    fun = "crossv", response = "survival", data = data, followup.time = followup.time, tau0 = tau0, surv.min = surv.min,
+    fun = "crossv", response = "survival", data = data,
+    followup.time = followup.time, tau0 = tau0, surv.min = surv.min,
     higher.y = higher.y, score.method = score.method, abc = abc,
     prop.cutoff = prop.cutoff, prop.multi = prop.multi,
     ps.method = ps.method, minPS = minPS, maxPS = maxPS, ipcw.method = ipcw.method,
@@ -614,7 +609,7 @@ catecvsurv <- function(data,
   )
 
 
-  #### PRE-PROCESSING ####
+  # Pre-processing
   out <- data.preproc.surv(fun = "crossv", cate.model = cate.model, ps.model = ps.model, ipcw.model = ipcw.model, tau0 = tau0,
                            data = data, prop.cutoff = prop.cutoff, prop.multi = prop.multi,
                            ps.method = ps.method, initial.predictor.method = initial.predictor.method, response = "survival")
@@ -712,7 +707,7 @@ catecvsurv <- function(data,
   if (verbose >= 1) pb <- txtProgressBar(min = 0, max = cv.n, style = 3)
 
   # Begin CV iteration
-  for(cv.i in 1:cv.n) {
+  for (cv.i in 1:cv.n) {
 
     ##### Split the data ------------------------------------------------------------------------------
     if (verbose >= 1){
@@ -944,12 +939,15 @@ catecvsurv <- function(data,
           ref <- log(result$overall.ate.valid[cv.i]) - temp.abc
         }
         result[[str_replace(name, "score", "ate")]]$abc.valid[cv.i] <-
-          auc(x = prop.abc, y = ref, from = prop.abc[1], to = prop.abc[length(prop.abc)], type = "spline")
+          auc(x = prop.abc, y = ref,
+              from = prop.abc[1],
+              to = prop.abc[length(prop.abc)],
+              type = "spline")
       } # end of if (abc == TRUE) {}
     } # end of for (name in names(fit.score.train)) {}
 
 
-    if (verbose == 2){
+    if (verbose == 2) {
       if (length(errors.valid) != 0) {
         if (verbose == 2) cat(paste0('     Warning: Error(s) occurred when estimating the ATEs in the nested subgroup using "', paste0(errors.valid, collapse = '", "'), '";\n    return NAs in the corresponding subgroup.'),'\n')
         warning(paste0('Error(s) occurred when estimating the ATEs in the nested subgroup in the validation set using "', paste0(errors.valid, collapse = '", "'), '" in cross-validation iteration ', cv.i, ". NAs are returned for RMTL ratio and HR in the corresponding subgroup; see 'errors/warnings'."))
@@ -1122,73 +1120,73 @@ catecvsurv <- function(data,
 #'
 #' @return Returns a list containing the following components saved as a \code{"precmed"} object:
 #' \itemize{
-#'  \item{\code{ate.poisson}: }{A list of results output if \code{score.method} includes
-#'  \code{'poisson'}:}
+#'  \item{\code{ate.poisson}: }A list of results output if \code{score.method} includes
+#'  \code{'poisson'}:
 #'  \itemize{
-#'     \item{\code{ate.est.train.high.cv}: }{A matrix of numerical values with
+#'     \item{\code{ate.est.train.high.cv}: }A matrix of numerical values with
 #'     \code{length(prop.cutoff)} rows and \code{cv.n} columns.
 #'     The ith row/jth column cell contains the estimated ATE in the nested subgroup of high responders
 #'     defined by CATE score above (if \code{higher.y = TRUE}) or below (if \code{higher.y = FALSE}) the
 #'     \code{prop.cutoff[i]}x100\% percentile of the estimated CATE score in the training set in the jth
-#'     cross-validation iteration.}
-#'     \item{\code{ate.est.train.low.cv}: }{A matrix of numerical values with
+#'     cross-validation iteration.
+#'     \item{\code{ate.est.train.low.cv}: }A matrix of numerical values with
 #'     \code{length(prop.cutoff) - 1} rows and \code{cv.n} columns.
 #'     The ith row/jth column cell contains the estimated ATE in the nested subgroup of low responders
 #'     defined by CATE score below (if \code{higher.y = TRUE}) or above (if \code{higher.y = FALSE}) the
 #'     \code{prop.cutoff[i]}x100\% percentile of the estimated CATE score in the training set in the jth
-#'     cross-validation iteration.}
-#'     \item{\code{ate.est.valid.high.cv}: }{Same as \code{ate.est.train.high.cv},
-#'     but in the validation set.}
-#'     \item{\code{ate.est.valid.low.cv}: }{Same as \code{ate.est.train.low.cv},
-#'     but in the validation set.}
-#'     \item{\code{ate.est.train.group.cv}: }{A matrix of numerical values with
+#'     cross-validation iteration.
+#'     \item{\code{ate.est.valid.high.cv}: }Same as \code{ate.est.train.high.cv},
+#'     but in the validation set.
+#'     \item{\code{ate.est.valid.low.cv}: }Same as \code{ate.est.train.low.cv},
+#'     but in the validation set.
+#'     \item{\code{ate.est.train.group.cv}: }A matrix of numerical values with
 #'     \code{length(prop.multi) - 1} rows and \code{cv.n} columns.
 #'     The jth column contains the estimated ATE in \code{length(prop.multi) - 1}
 #'     mutually exclusive subgroups defined by \code{prop.multi} in the training set in jth
-#'     cross-validation iteration.}
-#'     \item{\code{ate.est.valid.group.cv}: }{Same as \code{ate.est.train.group.cv}, but in the
-#'     validation set.}
-#'     \item{\code{abc.valid}: }{A vector of numerical values of length \code{cv.n}.
+#'     cross-validation iteration.
+#'     \item{\code{ate.est.valid.group.cv}: }Same as \code{ate.est.train.group.cv}, but in the
+#'     validation set.
+#'     \item{\code{abc.valid}: }A vector of numerical values of length \code{cv.n}.
 #'     The ith element returns the ABC of the validation curve in the ith cross-validation
-#'     iteration. Only returned if \code{abc = TRUE}.}
+#'     iteration. Only returned if \code{abc = TRUE}.
 #'  }
-#'  \item{\code{ate.boosting}: }{A list of results similar to \code{ate.poisson} output
-#'  if \code{score.method} includes \code{'boosting'}.}
-#'  \item{\code{ate.twoReg}: }{A list of results similar to \code{ate.poisson} output
-#'  if \code{score.method} includes \code{'twoReg'}.}
-#'  \item{\code{ate.contrastReg}: }{A list of results similar to \code{ate.poisson} output
+#'  \item{\code{ate.boosting}: }A list of results similar to \code{ate.poisson} output
+#'  if \code{score.method} includes \code{'boosting'}.
+#'  \item{\code{ate.twoReg}: }A list of results similar to \code{ate.poisson} output
+#'  if \code{score.method} includes \code{'twoReg'}.
+#'  \item{\code{ate.contrastReg}: }A list of results similar to \code{ate.poisson} output
 #'  if \code{score.method} includes \code{'contrastReg'}.
-#'  This method has an additional element in the list of results:}
+#'  This method has an additional element in the list of results:
 #'  \itemize{
-#'     \item{\code{converge.contrastReg.cv}: }{A vector of logical value of length \code{cv.n}.
+#'     \item{\code{converge.contrastReg.cv}: }A vector of logical value of length \code{cv.n}.
 #'     The ith element indicates whether the algorithm converged in the ith cross-validation
-#'     iteration.}
+#'     iteration.
 #'  }
-#'  \item{\code{ate.negBin}: }{A list of results similar to \code{ate.poisson} output
-#'  if \code{score.method} includes \code{'negBin'}.}
-#'  \item{\code{props}: }{A list of 3 elements:}
+#'  \item{\code{ate.negBin}: }A list of results similar to \code{ate.poisson} output
+#'  if \code{score.method} includes \code{'negBin'}.
+#'  \item{\code{props}: }A list of 3 elements:
 #'  \itemize{
-#'     \item{\code{prop.onlyhigh}: }{The original argument \code{prop.cutoff},
-#'     reformatted as necessary.}
-#'     \item{\code{prop.bi}: }{The original argument \code{prop.cutoff},
-#'     similar to \code{prop.onlyhigh} but reformatted to exclude 1.}
-#'     \item{\code{prop.multi}: }{The original argument \code{prop.multi},
-#'     reformatted as necessary to include 0 and 1.}
+#'     \item{\code{prop.onlyhigh}: }The original argument \code{prop.cutoff},
+#'     reformatted as necessary.
+#'     \item{\code{prop.bi}: }The original argument \code{prop.cutoff},
+#'     similar to \code{prop.onlyhigh} but reformatted to exclude 1.
+#'     \item{\code{prop.multi}: }The original argument \code{prop.multi},
+#'     reformatted as necessary to include 0 and 1.
 #'  }
-#'  \item{\code{overall.ate.valid}: }{A vector of numerical values of length \code{cv.n}.
+#'  \item{\code{overall.ate.valid}: }A vector of numerical values of length \code{cv.n}.
 #'  The ith element contains the ATE in the validation set of the ith cross-validation
-#'  iteration, estimated with the doubly robust estimator.}
-#'  \item{\code{overall.ate.train}: }{A vector of numerical values of length \code{cv.n}.
-#'  The ith element contains the ATE in the training set of the ith cross-validation
-#'  iteration, estimated with the doubly robust estimator.}
-#'  \item{\code{fgam}: }{The formula used in GAM if \code{initial.predictor.method = 'gam'}.}
-#'  \item{\code{higher.y}: }{The original \code{higher.y} argument.}
-#'  \item{\code{abc}: }{The original \code{abc} argument.}
-#'  \item{\code{cv.n}: }{The original \code{cv.n} argument.}
-#'  \item{\code{response}: }{The type of response. Always 'count' for this function.}
-#'  \item{\code{formulas}:}{A list of 3 elements: (1) \code{cate.model} argument,
+#'  iteration, estimated with the doubly robust estimator.
+#' \item{\code{overall.ate.train}: }A vector of numerical values of length \code{cv.n}.
+#' The ith element contains the ATE in the training set of the ith cross-validation
+#' iteration, estimated with the doubly robust estimator.
+#'  \item{\code{fgam}: }The formula used in GAM if \code{initial.predictor.method = 'gam'}.
+#'  \item{\code{higher.y}: }The original \code{higher.y} argument.
+#'  \item{\code{abc}: }The original \code{abc} argument.
+#'  \item{\code{cv.n}: }The original \code{cv.n} argument.
+#'  \item{\code{response}: }The type of response. Always 'count' for this function.
+#'  \item{\code{formulas}:}A list of 3 elements: (1) \code{cate.model} argument,
 #'  (2) \code{ps.model} argument and (3) original labels of the left-hand side variable in
-#'  \code{ps.model} (treatment) if it was not 0/1.}
+#'  \code{ps.model} (treatment) if it was not 0/1.
 #' }
 #'
 #' @details The CATE score represents an individual-level treatment effect expressed as a
@@ -1232,8 +1230,7 @@ catecvsurv <- function(data,
 #' Yadlowsky, S., Pellegrini, F., Lionetto, F., Braune, S., & Tian, L. (2020).
 #' \emph{Estimation and validation of ratio-based conditional average treatment
 #' effects using observational data. Journal of the American Statistical
-#' Association, 1-18.}
-#' \url{https://www.tandfonline.com/doi/full/10.1080/01621459.2020.1772080}
+#' Association, 1-18.}. DOI: 10.1080/01621459.2020.1772080.
 #'
 #' @seealso
 #' \code{\link{plot.precmed}()}, \code{\link{boxplot.precmed}()},
@@ -1264,7 +1261,6 @@ catecvsurv <- function(data,
 #' @importFrom stats as.formula coef glm median model.frame model.matrix model.offset model.response na.omit optim pchisq predict qnorm quantile sd var
 #' @importFrom utils setTxtProgressBar txtProgressBar
 #' @importFrom gbm gbm gbm.perf
-#' @importFrom MESS auc
 #' @importFrom stringr str_replace str_extract str_detect
 #' @importFrom dplyr %>%
 #' @importFrom glmnet cv.glmnet glmnet
@@ -1306,7 +1302,8 @@ catecvcount <- function(data,
 
   #### CHECK ARGUMENTS ####
   arg.checks(
-    fun = "crossv", response = "count", data = data, higher.y = higher.y, score.method = score.method, abc = abc,
+    fun = "crossv", response = "count", data = data, higher.y = higher.y,
+    score.method = score.method, abc = abc,
     prop.cutoff = prop.cutoff, prop.multi = prop.multi,
     ps.method = ps.method, minPS = minPS, maxPS = maxPS,
     train.prop = train.prop, cv.n = cv.n,
@@ -1619,13 +1616,13 @@ catecvcount <- function(data,
 #' values of the outcome are more desirable. Default is \code{TRUE}.
 #' @param abc A logical value indicating whether the area between curves (ABC) should be calculated
 #' at each cross-validation iterations, for each \code{score.method}. Default is \code{TRUE}.
-#' @param prop.cutoff A vector of numerical values (in (0, 1]) specifying percentiles of the
+#' @param prop.cutoff A vector of numerical values (in `(0, 1]`) specifying percentiles of the
 #' estimated CATE scores to define nested subgroups. Each element represents the cutoff to
 #' separate observations in nested subgroups (below vs above cutoff).
 #' The length of \code{prop.cutoff} is the number of nested subgroups.
 #' An equally-spaced sequence of proportions ending with 1 is recommended.
 #' Default is \code{seq(0.5, 1, length = 6)}.
-#' @param prop.multi A vector of numerical values (in [0, 1]) specifying percentiles of the
+#' @param prop.multi A vector of numerical values (in `[0, 1]`) specifying percentiles of the
 #' estimated CATE scores to define mutually exclusive subgroups.
 #' It should start with 0, end with 1, and be of \code{length(prop.multi) > 2}.
 #' Each element represents the cutoff to separate the observations into
@@ -1637,11 +1634,11 @@ catecvcount <- function(data,
 #' \code{'lasso'} for a logistic regression with main effects and LASSO penalization on
 #' two-way interactions (added to the model if interactions are not specified in \code{ps.model}).
 #' Relevant only when \code{ps.model} has more than one variable.
-#' @param minPS A numerical value (in [0, 1]) below which estimated propensity scores should be
+#' @param minPS A numerical value (in `[0, 1]`) below which estimated propensity scores should be
 #' truncated. Default is \code{0.01}.
-#' @param maxPS A numerical value (in (0, 1]) above which estimated propensity scores should be
+#' @param maxPS A numerical value (in `(0, 1]`) above which estimated propensity scores should be
 #' truncated. Must be strictly greater than \code{minPS}. Default is \code{0.99}.
-#' @param train.prop A numerical value (in (0, 1)) indicating the proportion of total data used
+#' @param train.prop A numerical value (in `(0, 1)`) indicating the proportion of total data used
 #' for training. Default is \code{3/4}.
 #' @param cv.n A positive integer value indicating the number of cross-validation iterations.
 #' Default is \code{10}.
@@ -1700,68 +1697,68 @@ catecvcount <- function(data,
 #'
 #' @return Returns a list containing the following components saved as a \code{"precmed"} object:
 #' \itemize{
-#'  \item{\code{ate.gaussian}: }{A list of results output if \code{score.method} includes
-#'  \code{'gaussian'}:}
+#'  \item{\code{ate.gaussian}: }A list of results output if \code{score.method} includes
+#'  \code{'gaussian'}:
 #'  \itemize{
-#'     \item{\code{ate.est.train.high.cv}: }{A matrix of numerical values with
+#'     \item{\code{ate.est.train.high.cv}: }A matrix of numerical values with
 #'     \code{length(prop.cutoff)} rows and \code{cv.n} columns.
 #'     The ith column/jth row cell contains the estimated ATE in the nested subgroup of high responders
 #'     defined by CATE score above (if \code{higher.y = TRUE}) or below (if \code{higher.y = FALSE}) the
 #'     \code{prop.cutoff[j]}x100\% percentile of the estimated CATE score in the training set in the ith
-#'     cross-validation iteration.}
-#'     \item{\code{ate.est.train.low.cv}: }{A matrix of numerical values with
+#'     cross-validation iteration.
+#'     \item{\code{ate.est.train.low.cv}: }A matrix of numerical values with
 #'     \code{length(prop.cutoff) - 1} rows and \code{cv.n} columns.
 #'     The ith column/jth row cell contains the estimated ATE in the nested subgroup of low responders
 #'     defined by CATE score below (if \code{higher.y = TRUE}) or above (if \code{higher.y = FALSE}) the
 #'     \code{prop.cutoff[j]}x100\% percentile of the estimated CATE score in the training set in the ith
-#'     cross-validation iteration.}
-#'     \item{\code{ate.est.valid.high.cv}: }{Same as \code{ate.est.train.high.cv},
-#'     but in the validation set.}
-#'     \item{\code{ate.est.valid.low.cv}: }{Same as \code{ate.est.train.low.cv},
-#'     but in the validation set.}
-#'     \item{\code{ate.est.train.group.cv}: }{A matrix of numerical values with
+#'     cross-validation iteration.
+#'     \item{\code{ate.est.valid.high.cv}: }Same as \code{ate.est.train.high.cv},
+#'     but in the validation set.
+#'     \item{\code{ate.est.valid.low.cv}: }Same as \code{ate.est.train.low.cv},
+#'     but in the validation set.
+#'     \item{\code{ate.est.train.group.cv}: }A matrix of numerical values with
 #'     \code{length(prop.multi) - 1} rows and \code{cv.n} columns.
 #'     The ith column contains the estimated ATE in \code{length(prop.multi) - 1}
 #'     mutually exclusive subgroups defined by \code{prop.multi} in the training set in ith
-#'     cross-validation iteration.}
-#'     \item{\code{ate.est.valid.group.cv}: }{Same as \code{ate.est.train.group.cv}, but in the
-#'     validation set.}
-#'     \item{\code{abc.valid}: }{A vector of numerical values of length \code{cv.n},
+#'     cross-validation iteration.
+#'     \item{\code{ate.est.valid.group.cv}: }Same as \code{ate.est.train.group.cv}, but in the
+#'     validation set.
+#'     \item{\code{abc.valid}: }A vector of numerical values of length \code{cv.n},
 #'     The ith element returns the ABC of the validation curve in the ith cross-validation
-#'     iteration. Only returned if \code{abc = TRUE}.}
+#'     iteration. Only returned if \code{abc = TRUE}.
 #'  }
-#'  \item{\code{ate.boosting}: }{A list of results similar to \code{ate.gaussian} output
-#'  if \code{score.method} includes \code{'boosting'}.}
-#'  \item{\code{ate.twoReg}: }{A list of results similar to \code{ate.gaussian} output
-#'  if \code{score.method} includes \code{'twoReg'}.}
-#'  \item{\code{ate.contrastReg}: }{A list of results similar to \code{ate.gaussian} output
-#'  if \code{score.method} includes \code{'contrastReg'}.}
-#'  \item{\code{ate.randomForest}: }{A list of results similar to \code{ate.gaussian} output
-#'  if \code{score.method} includes \code{'randomForest'}.}
-#'  \item{\code{ate.gam}: }{A list of results similar to \code{ate.gaussian} output
-#'  if \code{score.method} includes \code{'gam'}.}
-#'  \item{\code{props}: }{A list of 3 elements:}
+#'  \item{\code{ate.boosting}: }A list of results similar to \code{ate.gaussian} output
+#'  if \code{score.method} includes \code{'boosting'}.
+#'  \item{\code{ate.twoReg}: }A list of results similar to \code{ate.gaussian} output
+#'  if \code{score.method} includes \code{'twoReg'}.
+#'  \item{\code{ate.contrastReg}: }A list of results similar to \code{ate.gaussian} output
+#'  if \code{score.method} includes \code{'contrastReg'}.
+#' \item{\code{ate.randomForest}: }A list of ATE output measured by the RMTL ratio if
+#' \code{score.method} includes \code{'randomForest'}:
+#' \item{\code{ate.gam}: }A list of results similar to \code{ate.gaussian} output
+#' if \code{score.method} includes \code{'gam'}.
+#'  \item{\code{props}: }A list of 3 elements:
 #'  \itemize{
-#'     \item{\code{prop.onlyhigh}: }{The original argument \code{prop.cutoff},
-#'     reformatted as necessary.}
-#'     \item{\code{prop.bi}: }{The original argument \code{prop.cutoff},
-#'     similar to \code{prop.onlyhigh} but reformatted to exclude 1.}
-#'     \item{\code{prop.multi}: }{The original argument \code{prop.multi},
-#'     reformatted as necessary.}
+#'     \item{\code{prop.onlyhigh}: }The original argument \code{prop.cutoff},
+#'     reformatted as necessary.
+#'     \item{\code{prop.bi}: }The original argument \code{prop.cutoff},
+#'     similar to \code{prop.onlyhigh} but reformatted to exclude 1.
+#'     \item{\code{prop.multi}: }The original argument \code{prop.multi},
+#'     reformatted as necessary.
 #'  }
-#'  \item{\code{overall.ate.train}: }{A vector of numerical values of length \code{cv.n}.
+#'  \item{\code{overall.ate.train}: }A vector of numerical values of length \code{cv.n}.
 #'  The ith element contains the ATE in the training set of the ith cross-validation
-#'  iteration, estimated with the doubly robust estimator.}
-#'  \item{\code{overall.ate.valid}: }{A vector of numerical values of length \code{cv.n}.
+#'  iteration, estimated with the doubly robust estimator.
+#'  \item{\code{overall.ate.valid}: }A vector of numerical values of length \code{cv.n}.
 #'  The ith element contains the ATE in the validation set of the ith cross-validation
-#'  iteration, estimated with the doubly robust estimator.}
-#'  \item{\code{higher.y}: }{The original \code{higher.y} argument.}
-#'  \item{\code{abc}: }{The original \code{abc} argument.}
-#'  \item{\code{cv.n}: }{The original \code{cv.n} argument.}
-#'  \item{\code{response}: }{The type of response. Always 'continuous' for this function.}
-#'  \item{\code{formulas}:}{A list of 3 elements: (1) \code{cate.model} argument,
+#'  iteration, estimated with the doubly robust estimator.
+#'  \item{\code{higher.y}: }The original \code{higher.y} argument.
+#'  \item{\code{abc}: }The original \code{abc} argument.
+#'  \item{\code{cv.n}: }The original \code{cv.n} argument.
+#'  \item{\code{response}: }The type of response. Always 'continuous' for this function.
+#'  \item{\code{formulas}:}A list of 3 elements: (1) \code{cate.model} argument,
 #'  (2) \code{ps.model} argument and (3) original labels of the left-hand side variable in
-#'  \code{ps.model} (treatment) if it was not 0/1.}
+#'  \code{ps.model} (treatment) if it was not 0/1.
 #' }
 #'
 #' @details The CATE score represents an individual-level treatment effect for continuous data,
@@ -1803,8 +1800,7 @@ catecvcount <- function(data,
 #'
 #' @references Yadlowsky, S., Pellegrini, F., Lionetto, F., Braune, S., & Tian, L. (2020).
 #' \emph{Estimation and validation of ratio-based conditional average treatment effects using
-#' observational data. Journal of the American Statistical Association, 1-18.}
-#' \url{https://www.tandfonline.com/doi/full/10.1080/01621459.2020.1772080}
+#' observational data. Journal of the American Statistical Association, 1-18.} DOI: 10.1080/01621459.2020.1772080.
 #'
 #' @seealso \code{\link{plot.precmed}()}, \code{\link{boxplot.precmed}()}, \code{\link{abc}()} methods for \code{"precmed"} objects,
 #' and \code{\link{catefitmean}()} function.
@@ -1816,7 +1812,6 @@ catecvcount <- function(data,
 #' @importFrom stats as.formula coef glm median model.frame model.matrix model.offset model.response na.omit optim pchisq predict qnorm quantile sd var
 #' @importFrom utils setTxtProgressBar txtProgressBar
 #' @importFrom gbm gbm gbm.perf
-#' @importFrom MESS auc
 #' @importFrom stringr str_replace str_extract str_detect
 #' @importFrom dplyr %>%
 #' @importFrom glmnet cv.glmnet glmnet
@@ -1863,7 +1858,7 @@ catecvmean <- function(data,
 
   if (verbose >= 1) t.start <- Sys.time()
 
-  #### CHECK ARGUMENTS ####
+  #### CHECK ARGUMENTS
   ##TODO: Insert n.trees.rf
   arg.checks(
     fun = "crossv", response = "continuous", data = data, higher.y = higher.y, score.method = score.method, abc = abc,
@@ -1876,10 +1871,19 @@ catecvmean <- function(data,
     error.maxNR = error.maxNR, tune = tune
   )
 
-  #### PRE-PROCESSING ####
-  out <- data.preproc.mean(fun = "crossv", cate.model = cate.model, init.model = init.model, ps.model = ps.model,
-                           data = data, prop.cutoff = prop.cutoff, prop.multi = prop.multi, score.method = score.method,
-                           ps.method = ps.method, initial.predictor.method = initial.predictor.method)
+  # PRE-PROCESSING
+  out <- data.preproc.mean(fun = "crossv",
+                           cate.model = cate.model,
+                           init.model = init.model,
+                           ps.model = ps.model,
+                           data = data,
+                           prop.cutoff = prop.cutoff,
+                           prop.multi = prop.multi,
+                           score.method = score.method,
+                           ps.method = ps.method,
+                           initial.predictor.method = initial.predictor.method)
+
+  # Extract variables from pre-processed output
   y <- out$y
   trt <- out$trt
   x.ps <- out$x.ps
@@ -1889,21 +1893,39 @@ catecvmean <- function(data,
   prop.multi <- out$prop.multi
   initial.predictor.method <- out$initial.predictor.method
 
-  if (any(score.method %in% c("contrastReg", "twoReg"))) x.init <- out$x.init
-  if (abc == TRUE) prop.abc <- seq(prop.onlyhigh[1], prop.onlyhigh[length(prop.onlyhigh)], length = 100)
+  # Check if the scoring method is contrastReg or twoReg
+  if (any(score.method %in% c("contrastReg", "twoReg"))) {
+    x.init <- out$x.init             # Initial covariates for specific score methods
+  }
 
-  #### FUNCTION STARTS HERE ####
+  # If calculating ABC (Area Between Curves), generate a sequence for ABC calculation
+  if (abc == TRUE) {
+    prop.abc <- seq(
+      from = prop.onlyhigh[1],
+      to = prop.onlyhigh[length(prop.onlyhigh)],
+      length = 100
+    )
+  }
+
+  # Define the number of subgroups based on different propensity score cutoffs
   n.subgroup.onlyhigh <- length(prop.onlyhigh)
   n.subgroup.bi <- length(prop.bi)
   n.subgroup.multi <- length(prop.multi) - 1
 
+  # Initialize the result list
   result <- vector("list", length(score.method) + 1)
   names(result) <- c(paste0("ate.", score.method), "props")
+
   for (name in paste0("ate.", score.method)) {
     result[[name]] <- vector("list", 6)
-    names(result[[name]]) <- c("ate.est.train.high.cv", "ate.est.train.low.cv",
-                               "ate.est.valid.high.cv", "ate.est.valid.low.cv",
-                               "ate.est.train.group.cv", "ate.est.valid.group.cv")
+    names(result[[name]]) <- c(
+      "ate.est.train.high.cv",
+      "ate.est.train.low.cv",
+      "ate.est.valid.high.cv",
+      "ate.est.valid.low.cv",
+      "ate.est.train.group.cv",
+      "ate.est.valid.group.cv"
+      )
     result[[name]]$ate.est.train.high.cv <-
       result[[name]]$ate.est.valid.high.cv <- matrix(NA, n.subgroup.onlyhigh, cv.n)
     result[[name]]$ate.est.train.low.cv <-
@@ -1917,7 +1939,7 @@ catecvmean <- function(data,
       return(x)
     })
 
-    # # Add names to rows
+    # Add names to rows
     rownames(result[[name]]$ate.est.train.high.cv) <-
       rownames(result[[name]]$ate.est.valid.high.cv) <- paste0("prop", round(prop.onlyhigh, 2))
     rownames(result[[name]]$ate.est.train.low.cv) <-
@@ -1937,7 +1959,7 @@ catecvmean <- function(data,
   # Begin CV iteration
   for (cv.i in 1:cv.n) {
 
-    ##### Split the data ------------------------------------------------------------------------------
+    # Split the data
     if (verbose >= 1) {
       cat("\ncv =", cv.i, "\n")
       cat("  splitting the data..\n")
@@ -1984,7 +2006,7 @@ catecvmean <- function(data,
                                              interactions = FALSE)$mean.diff
 
 
-    ####### Fit the interaction model --------------------------------------------------------------
+    # Fit the interaction model
     if (verbose >= 1) cat("  training..\n")
     fit <- intxmean(y = y.train, trt = trt.train,
                     x.cate = x.cate.train, x.init = x.init.train, x.ps = x.ps.train,
@@ -2046,16 +2068,21 @@ catecvmean <- function(data,
     #    score.method.updated <- score.method[-which(score.method %in% names(fit$err.fit))]
     if (length(score.method.updated) == 0) {stop("All methods produced error in fitting.")}
 
-    ####### Construct the score in training set ------------------------------------------
+    # Construct the score in training set
     fit.score.train <- scoremean(fit = fit, x.cate = x.cate.train,
                                  score.method = score.method.updated)
 
-    ####### Estimate the treatment effect in training set --------------------------------
+    # Estimate the treatment effect in training set
     # if prop.onlyhigh ends with 1, estimate ATE once across all methods in the training
     if (prop.onlyhigh[n.subgroup.onlyhigh] == 1) {
       est.prop1 <- drmean(y = y.train,
-                          x.cate = x.cate.train, x.ps = x.ps.train, trt = trt.train,
-                          ps.method = ps.method, minPS = minPS, maxPS = maxPS, interactions = FALSE)$mean.diff
+                          x.cate = x.cate.train,
+                          x.ps = x.ps.train,
+                          trt = trt.train,
+                          ps.method = ps.method,
+                          minPS = minPS,
+                          maxPS = maxPS,
+                          interactions = FALSE)$mean.diff
     } else {
       est.prop1 <- NULL
     }
@@ -2082,14 +2109,14 @@ catecvmean <- function(data,
                                     minPS = minPS, maxPS = maxPS)
     }
 
-    ####### Construct the score in validation set ----------------------------------------------
+    ####### Construct the score in validation set
     if (verbose >= 1) cat("  validating..\n")
 
     fit.score.valid <- scoremean(fit = fit,
                                  x.cate = x.cate.valid,
                                  score.method = score.method.updated)
 
-    ####### Estimate the treatment effect in validation set --------------------------------------
+    ####### Estimate the treatment effect in validation set
     # if prop.onlyhigh ends with 1, estimate ATE once across all methods in the validation
     if (prop.onlyhigh[n.subgroup.onlyhigh] == 1) {
       est.prop1 <- drmean(y = y.valid,
@@ -2136,7 +2163,7 @@ catecvmean <- function(data,
           ref <- (result$overall.ate.valid[cv.i]) - temp.abc
         }
         result[[stringr::str_replace(name, "score", "ate")]]$abc.valid[cv.i] <-
-          MESS::auc(x = prop.abc, y = ref, from = prop.abc[1], to = prop.abc[length(prop.abc)], type = "spline")
+          auc(x = prop.abc, y = ref, from = prop.abc[1], to = prop.abc[length(prop.abc)], type = "spline")
       }
 
     }
@@ -2193,6 +2220,8 @@ catecvmean <- function(data,
 #' This should be run only after results of \code{\link{catecv}()} have been obtained.
 #'
 #' @param x An object of class \code{"precmed"}.
+#' @param ... Additional arguments (currently unused).
+#'
 #'
 #' @return Returns a matrix of numeric values with number of columns equal to the number cross-validation
 #' iteration and number of rows equal to the number of scoring methods in \code{x}.
@@ -2201,7 +2230,7 @@ catecvmean <- function(data,
 #' It is calculated for each scoring method separately. Higher ABC values are preferable as they
 #' indicate that more treatment effect heterogeneity is captured by the scoring method.
 #' Negative values of ABC are possible if segments of the validation curve cross the overall ATE line.
-#' The ABC is calculated with the \code{\link[MESS]{auc}()} in the \code{MESS} package with a natural
+#' The ABC is calculated with the \code{\link{auc}()} in \code{utility.R} with a natural
 #' cubic spline interpolation. The calculation of the ABC is always based on validation curves based on
 #' 100 proportions equally spaced from \code{min(prop.cutoff)} to \code{max(prop.cutoff)}.
 #'
@@ -2248,8 +2277,10 @@ catecvmean <- function(data,
 #' }
 #'
 #' @export
-abc <- function(x) UseMethod("abc", x)
+abc <- function(x, ...) UseMethod("abc", x)
 
+#' @export
+#' @rdname abc
 abc.default <- function(x, ...){
   warning(paste("ABC does not know how to handle object of class ",
                 class(x),
@@ -2262,6 +2293,7 @@ abc.default <- function(x, ...){
 #' This should be run only after results of \code{\link{catecv}()} have been obtained.
 #'
 #' @param x An object of class \code{"precmed"}.
+#' @param ... Additional arguments (currently unused).
 #'
 #' @return Returns a matrix of numeric values with number of columns equal to the number cross-validation
 #' iteration and number of rows equal to the number of scoring methods in \code{x}.
@@ -2270,7 +2302,7 @@ abc.default <- function(x, ...){
 #' It is calculated for each scoring method separately. Higher ABC values are preferable as they
 #' indicate that more treatment effect heterogeneity is captured by the scoring method.
 #' Negative values of ABC are possible if segments of the validation curve cross the overall ATE line.
-#' The ABC is calculated with the \code{\link[MESS]{auc}()} in the \code{MESS} package with a natural
+#' The ABC is calculated with the \code{\link{auc}()} in \code{utility.R} with a natural
 #' cubic spline interpolation. The calculation of the ABC is always based on validation curves based on
 #' 100 proportions equally spaced from \code{min(prop.cutoff)} to \code{max(prop.cutoff)}.
 #'
@@ -2319,7 +2351,7 @@ abc.default <- function(x, ...){
 #' @export
 #'
 #' @importFrom stringr str_extract
-abc.precmed <- function(x) {
+abc.precmed <- function(x, ...) {
 
   # Check the value of abc (must have area between curves values)
   if (!x$abc) {
@@ -2397,8 +2429,7 @@ abc.precmed <- function(x) {
 #'
 #' @references Yadlowsky, S., Pellegrini, F., Lionetto, F., Braune, S., & Tian, L. (2020).
 #' \emph{Estimation and validation of ratio-based conditional average treatment effects using
-#' observational data. Journal of the American Statistical Association, 1-18.}
-#' \url{https://www.tandfonline.com/doi/full/10.1080/01621459.2020.1772080}
+#' observational data. Journal of the American Statistical Association, 1-18.} DOI: 10.1080/01621459.2020.1772080.
 #'
 #' @seealso \code{\link{abc}()} and \code{\link{boxplot}()} for \code{"precmed"} objects.
 #'
@@ -2462,7 +2493,6 @@ abc.precmed <- function(x) {
 #'
 #' @importFrom rlang .data
 #' @importFrom stringr str_extract
-#' @importFrom MESS auc
 #' @importFrom dplyr filter select mutate group_by ungroup
 #' @importFrom ggplot2 ggplot aes facet_wrap geom_boxplot geom_hline geom_line
 #' labs scale_color_manual scale_linetype_manual scale_y_continuous
@@ -2755,10 +2785,10 @@ plot.precmed <- function(x,
 #' are relatively aligned across the multi-category subgroups indicate absence of treatment
 #' effect heterogeneity (or the inability of the scoring method to capture it).
 #'
-#' @references Yadlowsky, S., Pellegrini, F., Lionetto, F., Braune, S., & Tian, L. (2020).
+#' @references
+#' Yadlowsky, S., Pellegrini, F., Lionetto, F., Braune, S., & Tian, L. (2020).
 #' \emph{Estimation and validation of ratio-based conditional average treatment effects using
-#' observational data. Journal of the American Statistical Association, 1-18.}
-#' \url{https://www.tandfonline.com/doi/full/10.1080/01621459.2020.1772080}
+#' observational data. Journal of the American Statistical Association, 1-18.} DOI: 10.1080/01621459.2020.1772080.
 #'
 #' @seealso \code{\link{plot}} and \code{\link{abc}()} for \code{"precmed"} objects.
 #'
@@ -2932,11 +2962,11 @@ boxplot.precmed <- function(x, ylab = NULL,
 #' @param x.ps Matrix of \code{p.ps} baseline covariates (plus a leading column of 1 for the intercept);
 #' dimension \code{n} by \code{p.ps + 1} (covariates in the propensity score model plus intercept)
 #' @param time Log-transformed person-years of follow-up; vector of size \code{n}
-#' @param minPS A numerical value (in [0, 1]) below which estimated propensity scores should be
+#' @param minPS A numerical value (in `[0, 1]`) below which estimated propensity scores should be
 #' truncated. Default is \code{0.01}.
-#' @param maxPS A numerical value (in (0, 1]) above which estimated propensity scores should be
+#' @param maxPS A numerical value (in `(0, 1]`) above which estimated propensity scores should be
 #' truncated. Must be strictly greater than \code{minPS}. Default is \code{0.99}.
-#' @param train.prop A numerical value (in (0, 1)) indicating the proportion of total data used
+#' @param train.prop A numerical value (in `(0, 1)`) indicating the proportion of total data used
 #' for training. Default is \code{3/4}.
 #' @param error.max A numerical value > 0 indicating the tolerance (maximum value of error)
 #' for the largest standardized absolute difference in the covariate distributions or in the

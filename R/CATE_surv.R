@@ -32,7 +32,7 @@
 #' y variable). Default is \code{'breslow'}.
 #' @param higher.y A logical value indicating whether higher (\code{TRUE}) or
 #' lower (\code{FALSE}) values of the outcome are more desirable. Default is \code{TRUE}.
-#' @param prop.cutoff A vector of numerical values (in (0, 1]) specifying percentiles of the
+#' @param prop.cutoff A vector of numerical values (in `(0, 1]`) specifying percentiles of the
 #' estimated log CATE scores to define nested subgroups. Each element represents the cutoff to
 #' separate observations in nested subgroups (below vs above cutoff).
 #' The length of \code{prop.cutoff} is the number of nested subgroups.
@@ -44,9 +44,9 @@
 #' \code{'lasso'} for a logistic regression with main effects and LASSO penalization on
 #' two-way interactions (added to the model if interactions are not specified in \code{ps.model}).
 #' Relevant only when \code{ps.model} has more than one variable.
-#' @param minPS A numerical value (in [0, 1]) below which estimated propensity scores should be
+#' @param minPS A numerical value (in `[0, 1]`) below which estimated propensity scores should be
 #' truncated. Default is \code{0.01}.
-#' @param maxPS A numerical value (in (0, 1]) above which estimated propensity scores should be
+#' @param maxPS A numerical value (in `(0, 1]`) above which estimated propensity scores should be
 #' truncated. Must be strictly greater than \code{minPS}. Default is \code{0.99}.
 #' @param initial.predictor.method A character vector for the method used to get initial
 #' outcome predictions conditional on the covariates specified in \code{cate.model}. Only applies
@@ -92,77 +92,77 @@
 #'
 #' @return Returns an object of the class \code{catefit} containing the following components:
 #' \itemize{
-#'  \item{\code{ate.randomForest}: }{A vector of numerical values of length \code{prop.cutoff}
+#'  \item{\code{ate.randomForest}: } A vector of numerical values of length \code{prop.cutoff}
 #'  containing the estimated ATE by the RMTL ratio in nested subgroups (defined by \code{prop.cutoff})
 #'  constructed based on the estimated CATE scores with random forest method.
-#'  Only provided if \code{score.method} includes \code{'randomForest'}.}
-#'  \item{\code{ate.boosting}: }{Same as \code{ate.randomForest}, but with the nested subgroups based
+#'  Only provided if \code{score.method} includes \code{'randomForest'}.
+#'  \item{\code{ate.boosting}: }Same as \code{ate.randomForest}, but with the nested subgroups based
 #'  the estimated CATE scores with boosting. Only provided if \code{score.method}
-#'  includes \code{'boosting'}.}
-#'  \item{\code{ate.poisson}: }{Same as \code{ate.randomForest}, but with the nested subgroups based
+#'  includes \code{'boosting'}.
+#'  \item{\code{ate.poisson}: }Same as \code{ate.randomForest}, but with the nested subgroups based
 #'  the estimated CATE scores with poisson regression.
-#'  Only provided if \code{score.method} includes \code{'poisson'}.}
-#'  \item{\code{ate.twoReg}: }{Same as \code{ate.randomForest}, but with the nested subgroups based
+#'  Only provided if \code{score.method} includes \code{'poisson'}.
+#'  \item{\code{ate.twoReg}: }Same as \code{ate.randomForest}, but with the nested subgroups based
 #'  the estimated CATE scores with two regressions.
-#'  Only provided if \code{score.method} includes \code{'twoReg'}.}
-#'  \item{\code{ate.contrastReg}: }{Same as \code{ate.randomForest}, but with the nested subgroups based
+#'  Only provided if \code{score.method} includes \code{'twoReg'}.
+#'  \item{\code{ate.contrastReg}: }Same as \code{ate.randomForest}, but with the nested subgroups based
 #'  the estimated CATE scores with contrast regression.
-#'  Only provided if \code{score.method} includes \code{'contrastReg'}.}
-#'  \item{\code{hr.randomForest}: }{A vector of numerical values of length \code{prop.cutoff}
+#'  Only provided if \code{score.method} includes \code{'contrastReg'}.
+#'  \item{\code{hr.randomForest}: }A vector of numerical values of length \code{prop.cutoff}
 #'  containing the adjusted hazard ratio in nested subgroups (defined by \code{prop.cutoff})
 #'  constructed based on the estimated CATE scores with random forest method.
-#'  Only provided if \code{score.method} includes \code{'randomForest'}.}
-#'  \item{\code{hr.boosting}: }{Same as \code{hr.randomForest}, but with the nested subgroups based
+#'  Only provided if \code{score.method} includes \code{'randomForest'}.
+#'  \item{\code{hr.boosting}: }Same as \code{hr.randomForest}, but with the nested subgroups based
 #'  the estimated CATE scores with boosting. Only provided if \code{score.method}
-#'  includes \code{'boosting'}.}
-#'  \item{\code{hr.poisson}: }{Same as \code{hr.randomForest}, but with the nested subgroups based
+#'  includes \code{'boosting'}.
+#'  \item{\code{hr.poisson}: }Same as \code{hr.randomForest}, but with the nested subgroups based
 #'  the estimated CATE scores with poisson regression.
-#'  Only provided if \code{score.method} includes \code{'poisson'}.}
-#'  \item{\code{hr.twoReg}: }{Same as \code{hr.randomForest}, but with the nested subgroups based
+#'  Only provided if \code{score.method} includes \code{'poisson'}.
+#'  \item{\code{hr.twoReg}: }Same as \code{hr.randomForest}, but with the nested subgroups based
 #'  the estimated CATE scores with two regressions.
-#'  Only provided if \code{score.method} includes \code{'twoReg'}.}
-#'  \item{\code{hr.contrastReg}: }{Same as \code{hr.randomForest}, but with the nested subgroups based
+#'  Only provided if \code{score.method} includes \code{'twoReg'}.
+#'  \item{\code{hr.contrastReg}: }Same as \code{hr.randomForest}, but with the nested subgroups based
 #'  the estimated CATE scores with contrast regression.
-#'  Only provided if \code{score.method} includes \code{'contrastReg'}.}
-#'  \item{\code{score.randomForest}: }{A vector of numerical values of length n
+#'  Only provided if \code{score.method} includes \code{'contrastReg'}.
+#'  \item{\code{score.randomForest}: }A vector of numerical values of length n
 #'  (number of observations in \code{data}) containing the estimated log-CATE scores
 #'  according to random forest. Only provided if \code{score.method}
-#'  includes \code{'randomForest'}.}
-#'  \item{\code{score.boosting}: }{Same as \code{score.randomForest}, but with estimated log-CATE score
+#'  includes \code{'randomForest'}.
+#'  \item{\code{score.boosting}: }Same as \code{score.randomForest}, but with estimated log-CATE score
 #'  according to boosting. Only provided if \code{score.method} includes
-#'  \code{'boosting'}.}
-#'  \item{\code{score.poisson}: }{Same as \code{score.randomForest}, but with estimated log-CATE score
+#'  \code{'boosting'}.
+#'  \item{\code{score.poisson}: }Same as \code{score.randomForest}, but with estimated log-CATE score
 #'  according to the Poisson regression. Only provided if \code{score.method}
-#'  includes \code{'poisson'}.}
-#'  \item{\code{score.twoReg}: }{Same as \code{score.randomForest}, but with estimated log-CATE score
+#'  includes \code{'poisson'}.
+#'  \item{\code{score.twoReg}: }Same as \code{score.randomForest}, but with estimated log-CATE score
 #'  according to two regressions. Only provided if \code{score.method} includes
-#'  \code{'twoReg'}.}
-#'  \item{\code{score.contrastReg}: }{Same as \code{score.randomForest}, but with estimated log-CATE score
+#'  \code{'twoReg'}.
+#'  \item{\code{score.contrastReg}: }Same as \code{score.randomForest}, but with estimated log-CATE score
 #'  according to contrast regression. Only provided if \code{score.method} includes
-#'  \code{'contrastReg'}.}
-#'  \item{\code{fit}: }{Additional details on model fitting if \code{score.method}
-#'  includes 'randomForest', 'boosting' or 'contrastReg':}
+#'  \code{'contrastReg'}.
+#'  \item{\code{fit}: }Additional details on model fitting if \code{score.method}
+#'  includes 'randomForest', 'boosting' or 'contrastReg':
 #'  \itemize{
-#'    \item{\code{result.randomForest}: }{Details on the random forest model fitted to observations
+#'    \item{\code{result.randomForest}: }Details on the random forest model fitted to observations
 #'    with treatment = 0 \code{($fit0.rf)} and to observations with treatment = 1 \code{($fit1.rf)}.
-#'    Only provided if \code{score.method} includes \code{'randomForest'}.}
-#'    \item{\code{result.boosting}: }{Details on the boosting model fitted to observations
+#'    Only provided if \code{score.method} includes \code{'randomForest'}.
+#'    \item{\code{result.boosting}: }Details on the boosting model fitted to observations
 #'    with treatment = 0, \code{($fit0.boosting)} and \code{($fit0.gam)} and to observations with treatment = 1,
 #'    \code{($fit1.boosting)} and \code{($fit1.gam)}.
-#'    Only provided if \code{score.method} includes \code{'boosting'}.}
-#'    \item{\code{result.contrastReg$converge.contrastReg}: }{Whether the contrast regression algorithm converged
-#'    or not. Only provided if \code{score.method} includes \code{'contrastReg'}.}
+#'    Only provided if \code{score.method} includes \code{'boosting'}.
+#'    \item{\code{result.contrastReg$converge.contrastReg}: }Whether the contrast regression algorithm converged
+#'    or not. Only provided if \code{score.method} includes \code{'contrastReg'}.
 #'  }
-#'  \item{\code{coefficients}: }{A data frame with the coefficients of the estimated log-CATE
+#'  \item{\code{coefficients}: }A data frame with the coefficients of the estimated log-CATE
 #'  score by \code{score.method}. The data frame has number of rows equal to the number of
 #'  covariates in \code{cate.model} and number of columns equal to \code{length(score.method)}.
 #'  If \code{score.method} includes \code{'contrastReg'}, the data frame has an additional
 #'  column containing the standard errors of the coefficients estimated with contrast regression.
 #'  \code{'randomForest'} and \code{'boosting'} do not have coefficient results because
 #'  tree-based methods typically do not express the log-CATE as a linear combination of coefficients
-#'  and covariates.}
-#'  \item{\code{errors/warnings}: }{A nested list of errors and warnings that were wrapped during the
-#'  calculation of ATE. Errors and warnings are organized by \code{score.method}.}
+#'  and covariates.
+#'  \item{\code{errors/warnings}: }A nested list of errors and warnings that were wrapped during the
+#'  calculation of ATE. Errors and warnings are organized by \code{score.method}.
 #' }
 #'
 #' @details The CATE score represents an individual-level treatment effect for survival data,
@@ -189,8 +189,7 @@
 #'
 #' @references Yadlowsky, S., Pellegrini, F., Lionetto, F., Braune, S., & Tian, L. (2020).
 #' \emph{Estimation and validation of ratio-based conditional average treatment effects using
-#' observational data. Journal of the American Statistical Association, 1-18.}
-#' \url{https://www.tandfonline.com/doi/full/10.1080/01621459.2020.1772080}
+#' observational data. Journal of the American Statistical Association, 1-18.} DOI: 10.1080/01621459.2020.1772080.
 #'
 #' @seealso \code{\link{catecvsurv}()}
 #'
@@ -248,21 +247,24 @@ catefitsurv <- function(data,
 
   if (verbose >= 1) t.start <- Sys.time()
 
-  #### CHECK ARGUMENTS ####
+  # CHECK ARGUMENTS
   arg.checks(
-    fun = "catefit", response = "survival", data = data, followup.time = followup.time, tau0 = tau0, surv.min = surv.min,
+    fun = "catefit", response = "survival", data = data,
+    followup.time = followup.time, tau0 = tau0, surv.min = surv.min,
     higher.y = higher.y, score.method = score.method, abc = FALSE,
     prop.cutoff = prop.cutoff,
-    ps.method = ps.method, minPS = minPS, maxPS = maxPS, ipcw.method = ipcw.method,
+    ps.method = ps.method, minPS = minPS, maxPS = maxPS,
+    ipcw.method = ipcw.method,
     train.prop = 0.5, cv.n = 1,
     error.max = 1, max.iter = 2,
     initial.predictor.method = initial.predictor.method,
-    tree.depth = tree.depth, n.trees.rf = n.trees.rf, n.trees.boosting = n.trees.boosting,
+    tree.depth = tree.depth, n.trees.rf = n.trees.rf,
+    n.trees.boosting = n.trees.boosting,
     B = B, Kfold = Kfold, plot.gbmperf = plot.gbmperf,
     error.maxNR = error.maxNR, max.iterNR = max.iterNR, tune = tune
   )
 
-  #### PRE-PROCESSING ####
+  # PRE-PROCESSING
   out <- data.preproc.surv(fun = "catefit", cate.model = cate.model,
                            ps.model = ps.model, ipcw.model = ipcw.model,
                            tau0 = tau0, data = data, prop.cutoff = prop.cutoff,
@@ -275,17 +277,16 @@ catefitsurv <- function(data,
   x.ipcw <- out$x.ipcw
   prop <- out$prop
   prop.no1 <- out$prop.no1
+  yf <- NULL
 
-  if (is.null(followup.time)) {
-    yf <- NULL
-  } else {
+  if (!is.null(followup.time)) {
     yf <- data[[followup.time]]
   }
 
   # Check if tau0 is large enough, i.e., if tau0 is larger than the 50% quantile of the observed or censoring time.
   if (tau0 < median(y)) warning("It is recommended to increase tau0 close to the largest observed or censored time.")
 
-  #### FUNCTION STARTS HERE ####
+  # FUNCTION STARTS HERE
   result <- vector("list", 3 * length(score.method) + 2)
   names(result) <- c(paste0("ate.", score.method), paste0("hr.", score.method), paste0("score.", score.method), "fit", "coefficients")
 
@@ -299,7 +300,7 @@ catefitsurv <- function(data,
                                           return(x)
                                         })
 
-  ###### Fit the interaction model --------------------------------------------------------------
+  # Fit the interaction model
   fit <- intxsurv(y = y, d = d, trt = trt, x.cate = x.cate, x.ps = x.ps, x.ipcw = x.ipcw, yf = yf, tau0 = tau0, surv.min = surv.min,
                   score.method = score.method,
                   ps.method = ps.method, minPS = minPS, maxPS = maxPS, ipcw.method = ipcw.method,
@@ -312,10 +313,10 @@ catefitsurv <- function(data,
     warning(paste("The best boosting iteration was iteration number", n.trees.boosting, " out of ", n.trees.boosting, ". Consider increasing the maximum number of trees and turning on boosting performance plot (plot.gbmperf = TRUE).", sep = ""))
   }
 
-  ####### Construct the score in the whole dataset (no training or validation for catefitsurv) ------------------------------------------
+  # Construct the score in the whole dataset (no training or validation for catefitsurv)
   fit.score <- scoresurv(fit = fit, x.cate = x.cate, tau0 = tau0, score.method = score.method)
 
-  ####### Estimate the treatment effect in the whole dataset --------------------------------
+  # Estimate the treatment effect in the whole dataset
   errors <- warnings <- c()
   est.prop1 <- NULL
 
@@ -420,22 +421,37 @@ catefitsurv <- function(data,
 #'
 
 onearmsurv.dr <- function(ynew, dnew, trt, x.cate, tau0, weightsurv, ps, f.predictor) {
+
+  # Normalize the survival weights
   weightc <- weightsurv / mean(weightsurv)
 
+  # Update ynew and f.predictor by subtracting tau0
   ynew <- tau0 - ynew
   f.predictor <- tau0 - f.predictor
-  x <- as.matrix(cbind(1, log(f.predictor), x.cate))
 
+  # Construct the design matrix including the intercept and log(f.predictor)
+  x <- cbind(1, log(f.predictor), x.cate)
+
+  # Fit the Poisson model with weighted data, handle warnings, and return coefficients
   withCallingHandlers({
-    fit <- glm(ynew ~ log(f.predictor) + x.cate, family = "poisson", weights = weightc * trt / ps)
-    beta <- fit$coef
-    yhat <- exp(as.matrix(x[, is.na(beta) == FALSE, drop = FALSE]) %*% beta[is.na(beta) == FALSE])
+    fit <- glm(ynew ~ log(f.predictor) + x.cate,
+               family = "poisson",
+               weights = weightc * trt / ps)
+
+    # Extract non-NA coefficients and calculate predictions
+    beta <- fit$coef[!is.na(fit$coef)]
+    yhat <- exp(as.matrix(x[, !is.na(fit$coef), drop = FALSE]) %*% beta)
+
+    # Fit the second model on the predicted values
     fit2 <- glm(yhat ~ x.cate, family = "poisson")
   },
-  warning = function(w) { # don't change the = to <- in withCallingHandlers
+  warning = function(w) {
+    # Suppress the specific "non-integer x" warning in glm() for Poisson models
     if (grepl("non-integer", conditionMessage(w)))
-      invokeRestart("muffleWarning") # suppress warnings in glm(): "In dpois(y, mu, log = TRUE) : non-integer x = 0.557886."
+      invokeRestart("muffleWarning")
   })
+
+  # Return the coefficients of the second model
   return(fit2$coef)
 }
 
@@ -494,7 +510,7 @@ twoarmsurv.dr <- function(ynew, dnew, trt, x.cate, tau0, weightsurv,
   while (mae > error.maxNR && iter <= max.iterNR && eta.max < 1000 * tau0) {
     eta <- as.numeric(exp(x.aug %*% beta))
     eta.max <- max(eta)
-    if(eta.max == Inf) break
+    if (eta.max == Inf) break
     error <- (trt * (y - eta * f0.predictor / 2 - f1.predictor / 2) * (1 - ps) - (1 - trt) * (y * eta - f0.predictor * eta / 2 - f1.predictor / 2) * ps) / (eta * ps + (1 - ps))
     score <- colSums(x.aug * weightc * error)
     slopewt <- (y + f0.predictor * (trt / ps - 1) / 2 + f1.predictor * ((1 - trt) / (1 - ps) - 1) / 2) * eta * ps * (1 - ps) / (eta * ps + (1 - ps))^2
@@ -552,7 +568,7 @@ twoarmsurv.dr <- function(ynew, dnew, trt, x.cate, tau0, weightsurv,
 #' \code{'lasso'} for a logistic regression with main effects and LASSO penalization on
 #' two-way interactions (added to the model if interactions are not specified in \code{ps.model}).
 #' Relevant only when \code{ps.model} has more than one variable.
-#' @param minPS A numerical value (in [0, 1]) below which estimated propensity scores should be
+#' @param minPS A numerical value (in `[0, 1]`) below which estimated propensity scores should be
 #' truncated. Default is \code{0.01}.
 #' @param maxPS A number above which estimated propensity scores should be trimmed; scalar
 #' @param ipcw.method The censoring model. Allowed values are: \code{'breslow'} (Cox regression with Breslow estimator of the baseline survivor function),
@@ -602,19 +618,30 @@ twoarmsurv.dr <- function(ynew, dnew, trt, x.cate, tau0, weightsurv,
 #'               $delta.contrastReg: Contrast regression DR estimator; vector of length \code{p.cate} + 1
 #'               $converge.contrastReg: Indicator that the Newton Raphson algorithm converged for \code{delta_0}; boolean
 
-intxsurv <- function(y, d, trt, x.cate, x.ps, x.ipcw, yf = NULL, tau0, surv.min = 0.025,
-                     score.method = c("randomForest", "boosting", "poisson", "twoReg", "contrastReg"),
-                     ps.method = "glm", minPS = 0.01, maxPS = 0.99, ipcw.method = "breslow",
+intxsurv <- function(y, d, trt, x.cate, x.ps, x.ipcw, yf = NULL, tau0,
+                     surv.min = 0.025,
+                     score.method = c("randomForest", "boosting", "poisson",
+                                      "twoReg", "contrastReg"),
+                     ps.method = "glm", minPS = 0.01, maxPS = 0.99,
+                     ipcw.method = "breslow",
                      initial.predictor.method = "randomForest",
-                     tree.depth = 3, n.trees.rf = 1000, n.trees.boosting = 150,  B = 3, Kfold = 5, plot.gbmperf = TRUE,
-                     error.maxNR = 1e-3, max.iterNR = 100, tune = c(0.5, 2), ...) {
+                     tree.depth = 3, n.trees.rf = 1000, n.trees.boosting = 150,
+                     B = 3, Kfold = 5, plot.gbmperf = TRUE,
+                     error.maxNR = 1e-3, max.iterNR = 100,
+                     tune = c(0.5, 2), ...) {
 
   result <- vector("list", length(score.method))
   names(result) <- c(paste0("result.", score.method))
 
-  N1 <- sum(trt)
-  N0 <- sum(1 - trt)
-  N <- N1 + N0
+  # Calculate the total number of patients who received the treatment (N1)
+  # and the total number of patients who did not receive the treatment (N0)
+  N1 <- sum(trt)               # N1: number of treated patients (trt = 1)
+  N0 <- length(trt) - N1        # N0: number of untreated patients (trt = 0)
+
+  # Total number of patients
+  N <- length(trt)              # N is simply the total number of patients
+
+  # Calculate p.aug: the number of covariates in x.cate plus 1 for the intercept
   p.aug <- ncol(x.cate) + 1
 
   ynew <- pmin(y, tau0)
@@ -625,18 +652,12 @@ intxsurv <- function(y, d, trt, x.cate, x.ps, x.ipcw, yf = NULL, tau0, surv.min 
   weightc <- dnew / surv.new
   weightc <- weightc / mean(weightc)
 
-  datatotrf <- data.frame(y = ynew, d = dnew, x = x.cate)
-  colnames(datatotrf) <- c("y", "d", colnames(x.cate))
-  datatot <- data.frame(y = ynew / tau0, x = x.cate)
-  colnames(datatot) <- c("y", colnames(x.cate))
+  datatotrf <- data.frame("y" = ynew, "d" = dnew, x.cate)
+  datatot <- data.frame("y" = ynew / tau0, x.cate)
 
-  ######## Cross fitting ------------------------------------------------------------------
-
-  index1 <- rep(1:Kfold, floor(N1 / Kfold))
-  if (N1 > Kfold * floor(N1 / Kfold)) index1 <- c(index1, 1:(N1 - Kfold * floor(N1 / Kfold)))
-
-  index0 <- rep(1:Kfold, floor(N0 / Kfold))
-  if (N0 > Kfold * floor(N0 / Kfold)) index0 <- c(index0, Kfold + 1 - 1:(N0 - Kfold * floor(N0 / Kfold)))
+  # Generate indices for N1 (normal order) and N0 (reverse order)
+  index1 <- generate_kfold_indices(N1, Kfold, reverse = FALSE)
+  index0 <- generate_kfold_indices(N0, Kfold, reverse = TRUE)
 
   best.iter <- 0
 

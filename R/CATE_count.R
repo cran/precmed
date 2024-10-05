@@ -16,7 +16,7 @@
 #' coded as 0/1. If data are from a randomized trial, specify \code{ps.model} as an intercept-only model.
 #' @param higher.y A logical value indicating whether higher (\code{TRUE}) or
 #' lower (\code{FALSE}) values of the outcome are more desirable. Default is \code{TRUE}.
-#' @param prop.cutoff A vector of numerical values (in (0, 1]) specifying percentiles of the
+#' @param prop.cutoff A vector of numerical values (in `(0, 1]`) specifying percentiles of the
 #' estimated log CATE scores to define nested subgroups. Each element represents the cutoff to
 #' separate observations in nested subgroups (below vs above cutoff).
 #' The length of \code{prop.cutoff} is the number of nested subgroups.
@@ -28,9 +28,9 @@
 #' \code{'lasso'} for a logistic regression with main effects and LASSO penalization on
 #' two-way interactions (added to the model if interactions are not specified in \code{ps.model}).
 #' Relevant only when \code{ps.model} has more than one variable.
-#' @param minPS A numerical value (in [0, 1]) below which estimated propensity scores should be
+#' @param minPS A numerical value (in `[0, 1]`) below which estimated propensity scores should be
 #' truncated. Default is \code{0.01}.
-#' @param maxPS A numerical value (in (0, 1]) above which estimated propensity scores should be
+#' @param maxPS A numerical value (in `(0, 1]`) above which estimated propensity scores should be
 #' truncated. Must be strictly greater than \code{minPS}. Default is \code{0.99}.
 #' @param initial.predictor.method A character vector for the method used to get initial
 #' outcome predictions conditional on the covariates in \code{cate.model}. Only applies
@@ -76,55 +76,55 @@
 #'
 #' @return Returns a list containing the following components:
 #' \itemize{
-#'  \item{\code{ate.poisson}: }{A vector of numerical values of length \code{prop.cutoff}
+#'  \item{\code{ate.poisson}: }A vector of numerical values of length \code{prop.cutoff}
 #'  containing the estimated ATE in nested subgroups (defined by \code{prop.cutoff})
 #'  constructed based on the estimated CATE scores with poisson regression.
-#'  Only provided if \code{score.method} includes \code{'poisson'}.}
-#'  \item{\code{ate.boosting}: }{Same as \code{ate.poisson}, but with the nested subgroups based
+#'  Only provided if \code{score.method} includes \code{'poisson'}.
+#'  \item{\code{ate.boosting}: }Same as \code{ate.poisson}, but with the nested subgroups based
 #'  the estimated CATE scores with boosting. Only provided if \code{score.method}
-#'  includes \code{'boosting'}.}
-#'  \item{\code{ate.twoReg}: }{Same as \code{ate.poisson}, but with the nested subgroups based
+#'  includes \code{'boosting'}.
+#'  \item{\code{ate.twoReg}: }Same as \code{ate.poisson}, but with the nested subgroups based
 #'  the estimated CATE scores with two regressions.
-#'  Only provided if \code{score.method} includes \code{'twoReg'}.}
-#'  \item{\code{ate.contrastReg}: }{Same as \code{ate.poisson}, but with the nested subgroups based
+#'  Only provided if \code{score.method} includes \code{'twoReg'}.
+#'  \item{\code{ate.contrastReg}: }Same as \code{ate.poisson}, but with the nested subgroups based
 #'  the estimated CATE scores with contrast regression.
-#'  Only provided if \code{score.method} includes \code{'contrastReg'}.}
-#'  \item{\code{ate.negBin}: }{Same as \code{ate.poisson}, but with the nested subgroups based
+#'  Only provided if \code{score.method} includes \code{'contrastReg'}.
+#'  \item{\code{ate.negBin}: }Same as \code{ate.poisson}, but with the nested subgroups based
 #'  the estimated CATE scores with negative binomial regression.
-#'  Only provided if \code{score.method} includes \code{'negBin'}.}
-#'  \item{\code{score.poisson}: }{A vector of numerical values of length n
+#'  Only provided if \code{score.method} includes \code{'negBin'}.
+#'  \item{\code{score.poisson}: }A vector of numerical values of length n
 #'  (number of observations in \code{data}) containing the estimated log-CATE scores
 #'  according to the Poisson regression. Only provided if \code{score.method}
-#'  includes \code{'poisson'}.}
-#'  \item{\code{score.boosting}: }{Same as \code{score.poisson}, but with estimated log-CATE score
+#'  includes \code{'poisson'}.
+#'  \item{\code{score.boosting}: }Same as \code{score.poisson}, but with estimated log-CATE score
 #'  according to boosting. Only provided if \code{score.method} includes
-#'  \code{'boosting'}.}
-#'  \item{\code{score.twoReg}: }{Same as \code{score.poisson}, but with estimated log-CATE score
+#'  \code{'boosting'}.
+#'  \item{\code{score.twoReg}: }Same as \code{score.poisson}, but with estimated log-CATE score
 #'  according to two regressions. Only provided if \code{score.method} includes
-#'  \code{'twoReg'}.}
-#'  \item{\code{score.contrastReg}: }{Same as \code{score.poisson}, but with estimated log-CATE score
+#'  \code{'twoReg'}.
+#'  \item{\code{score.contrastReg}: }Same as \code{score.poisson}, but with estimated log-CATE score
 #'  according to contrast regression. Only provided if \code{score.method} includes
-#'  \code{'contrastReg'}.}
-#'  \item{\code{score.negBin}: }{Same as \code{score.poisson}, but with estimated log-CATE score
+#'  \code{'contrastReg'}.
+#'  \item{\code{score.negBin}: }Same as \code{score.poisson}, but with estimated log-CATE score
 #'  according to negative binomial regression. Only provided if \code{score.method}
-#'  includes \code{'negBin'}.}
-#'  \item{\code{fit}: }{Additional details on model fitting if \code{score.method}
-#'  includes 'boosting' or 'contrastReg':}
+#'  includes \code{'negBin'}.
+#'  \item{\code{fit}: }Additional details on model fitting if \code{score.method}
+#'  includes 'boosting' or 'contrastReg':
 #'  \itemize{
-#'    \item{\code{result.boosting}: }{Details on the boosting model fitted to observations
+#'    \item{\code{result.boosting}: }Details on the boosting model fitted to observations
 #'    with treatment = 0 \code{($fit0.boosting)} and to observations with treatment = 1 \code{($fit1.boosting)}.
-#'    Only provided if \code{score.method} includes \code{'boosting'}.}
-#'    \item{\code{result.contrastReg$sigma.contrastReg}: }{Variance-covariance matrix of
+#'    Only provided if \code{score.method} includes \code{'boosting'}.
+#'    \item{\code{result.contrastReg$sigma.contrastReg}: }Variance-covariance matrix of
 #'    the estimated log-CATE coefficients in contrast regression.
-#'    Only provided if \code{score.method} includes \code{'contrastReg'}.}
+#'    Only provided if \code{score.method} includes \code{'contrastReg'}.
 #'  }
-#'  \item{\code{coefficients}: }{A data frame with the coefficients of the estimated log-CATE
+#'  \item{\code{coefficients}: }A data frame with the coefficients of the estimated log-CATE
 #'  score by \code{score.method}. The data frame has number of rows equal to the number of
 #'  covariates in \code{cate.model} and number of columns equal to \code{length(score.method)}.
 #'  If \code{score.method} includes \code{'contrastReg'}, the data frame has an additional
 #'  column containing the standard errors of the coefficients estimated with contrast regression.
 #'  \code{'boosting'} does not have coefficient results because tree-based methods typically do not
-#'  express the log-CATE as a linear combination of coefficients and covariates.}
+#'  express the log-CATE as a linear combination of coefficients and covariates.
 #' }
 #'
 #' @details The CATE score represents an individual-level treatment effect, estimated with
@@ -150,8 +150,7 @@
 #'
 #' @references Yadlowsky, S., Pellegrini, F., Lionetto, F., Braune, S., & Tian, L. (2020).
 #' \emph{Estimation and validation of ratio-based conditional average treatment effects using
-#' observational data. Journal of the American Statistical Association, 1-18.}
-#' \url{https://www.tandfonline.com/doi/full/10.1080/01621459.2020.1772080}
+#' observational data. Journal of the American Statistical Association, 1-18.} DOI: 10.1080/01621459.2020.1772080.
 #'
 #' @seealso \code{\link{catecvcount}()}
 #'
@@ -197,10 +196,12 @@ catefitcount <- function(data,
 
   #### CHECK ARGUMENTS ####
   arg.checks(
-    fun = "catefit", response = "count", data = data, higher.y = higher.y, score.method = score.method, prop.cutoff = prop.cutoff,
+    fun = "catefit", response = "count", data = data, higher.y = higher.y,
+    score.method = score.method, prop.cutoff = prop.cutoff,
     ps.method = ps.method, minPS = minPS, maxPS = maxPS,
     initial.predictor.method = initial.predictor.method,
-    tree.depth = tree.depth, n.trees.boosting = n.trees.boosting, B = B, Kfold = Kfold, plot.gbmperf = plot.gbmperf,
+    tree.depth = tree.depth, n.trees.boosting = n.trees.boosting, B = B,
+    Kfold = Kfold, plot.gbmperf = plot.gbmperf,
     error.maxNR = error.maxNR, max.iterNR = max.iterNR, tune = tune
   )
 
@@ -448,7 +449,7 @@ twoarmglmcount.dr <- function(y, x.cate, time, trt,
 #' \code{'lasso'} for a logistic regression with main effects and LASSO penalization on
 #' two-way interactions (added to the model if interactions are not specified in \code{ps.model}).
 #' Relevant only when \code{ps.model} has more than one variable.
-#' @param minPS A numerical value (in [0, 1]) below which estimated propensity scores should be
+#' @param minPS A numerical value (in `[0, 1]`) below which estimated propensity scores should be
 #' truncated. Default is \code{0.01}.
 #' @param maxPS A number above which estimated propensity scores should be trimmed; scalar
 #' @param initial.predictor.method A character vector for the method used to get initial
@@ -509,21 +510,25 @@ intxcount <- function(y, trt, x.cate, x.ps, time,
   result <- vector("list", length(score.method) + 1)
   names(result) <- c(paste0("result.", score.method), "best.iter")
 
-  N1 <- sum(trt)
-  N0 <- sum(1 - trt)
-  N <- N1 + N0
+  # Calculate the total number of patients who received the treatment (N1)
+  # and the total number of patients who did not receive the treatment (N0)
+  N1 <- sum(trt)               # N1: number of treated patients (trt = 1)
+  N0 <- length(trt) - N1        # N0: number of untreated patients (trt = 0)
+
+  # Total number of patients
+  N <- length(trt)              # N is simply the total number of patients
+
+  # Calculate p.aug: the number of covariates in x.cate plus 1 for the intercept
   p.aug <- ncol(x.cate) + 1
 
-  datatot <- data.frame(y, x.cate, time)
-  colnames(datatot) <- c("y", colnames(x.cate), "time")
+  datatot <- data.frame("y" = y, x.cate, "time" = time)
 
-  ######### cross-fitting  ---------------------------------------------------------------
+  ######### cross-fitting
 
-  index1 <- rep(1:Kfold, floor(N1 / Kfold))
-  if (N1 > Kfold * floor(N1 / Kfold)) index1 <- c(index1, 1:(N1 - Kfold * floor(N1 / Kfold)))
+  # Generate indices for N1 (normal order) and N0 (reverse order)
+  index1 <- generate_kfold_indices(N1, Kfold, reverse = FALSE)
+  index0 <- generate_kfold_indices(N0, Kfold, reverse = TRUE)
 
-  index0 <- rep(1:Kfold, floor(N0 / Kfold))
-  if (N0 > Kfold * floor(N0 / Kfold)) index0 <- c(index0, Kfold + 1 - 1:(N0 - Kfold * floor(N0 / Kfold)))
 
   delta.twoReg.mat <- delta.contrastReg.mat <- matrix(NA, B, p.aug)
   sigma.contrastReg.mat <- matrix(0, p.aug, p.aug)
@@ -554,8 +559,12 @@ intxcount <- function(y, trt, x.cate, x.ps, time,
         if (initial.predictor.method == "boosting") {
           # if model has a single predictor, GBM must have cv.folds = 0 https://github.com/zoonproject/zoon/issues/130
           cate.cvfold <- ifelse(ncol(x.cate) == 1, 0, 5)
-          fit1.boosting <- gbm(y ~ . - time + offset(time), data = data1, distribution = "poisson",
-                                 interaction.depth = tree.depth, n.trees = n.trees.boosting, cv.folds = cate.cvfold, ...)
+          fit1.boosting <- gbm(y ~ . - time + offset(time),
+                               data = data1,
+                               distribution = "poisson",
+                               interaction.depth = tree.depth,
+                               n.trees = n.trees.boosting,
+                               cv.folds = cate.cvfold, ...)
           best1.iter <- max(10, gbm.perf(fit1.boosting, method = "cv", plot.it = plot.gbmperf))
 
 
@@ -773,3 +782,4 @@ scorecount <- function(fit, x.cate, time,
 
   return(result)
 }
+

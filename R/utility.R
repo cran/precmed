@@ -9,21 +9,21 @@
 #' \code{'lasso'} for a logistic regression with main effects and LASSO penalization on
 #' two-way interactions (added to the model if interactions are not specified in \code{ps.model}).
 #' Relevant only when \code{ps.model} has more than one variable.
-#' @param minPS A numerical value (in [0, 1]) below which estimated propensity scores should be
+#' @param minPS A numerical value (in `[0, 1]`) below which estimated propensity scores should be
 #' truncated. Default is \code{0.01}.
-#' @param maxPS A numerical value (in (0, 1]) above which estimated propensity scores should be
+#' @param maxPS A numerical value (in `(0, 1]`) above which estimated propensity scores should be
 #' truncated. Must be strictly greater than \code{minPS}. Default is \code{0.99}.
 #' @param higher.y A logical value indicating whether higher (\code{TRUE}) or lower (\code{FALSE})
 #' values of the outcome are more desirable. Default is \code{TRUE}.
 #' @param abc A logical value indicating whether the area between curves (ABC) should be calculated
 #' at each cross-validation iterations, for each \code{score.method}. Default is \code{TRUE}.
-#' @param prop.cutoff A vector of numerical values (in (0, 1]) specifying percentiles of the
+#' @param prop.cutoff A vector of numerical values (in `(0, 1]`) specifying percentiles of the
 #' estimated log CATE scores to define nested subgroups. Each element represents the cutoff to
 #' separate observations in nested subgroups (below vs above cutoff).
 #' The length of \code{prop.cutoff} is the number of nested subgroups.
 #' An equally-spaced sequence of proportions ending with 1 is recommended.
 #' Default is \code{seq(0.5, 1, length = 6)}.
-#' @param prop.multi A vector of numerical values (in [0, 1]) specifying percentiles of the
+#' @param prop.multi A vector of numerical values (in `[0, 1]`) specifying percentiles of the
 #' estimated log CATE scores to define mutually exclusive subgroups.
 #' It should start with 0, end with 1, and be of \code{length(prop.multi) > 2}.
 #' Each element represents the cutoff to separate the observations into
@@ -55,7 +55,7 @@
 #' Newton Raphson algorithm. \code{tune[1]} is the step size, \code{tune[2]} specifies a
 #' quantity to be added to diagonal of the slope matrix to prevent singularity.
 #' Used only if \code{score.method = 'contrastReg'}. Default is \code{c(0.5, 2)}.
-#' @param train.prop A numerical value (in (0, 1)) indicating the proportion of total data used
+#' @param train.prop A numerical value (in `(0, 1)`) indicating the proportion of total data used
 #' for training. Default is \code{3/4}.
 #' @param cv.n A positive integer value indicating the number of cross-validation iterations.
 #' Default is \code{10}.
@@ -121,18 +121,20 @@ arg.checks.common <- function(fun,
 
       # Check values of CV
       if (train.prop >= 1 | train.prop <= 0) stop("train.prop must be a number between 0 and 1, exclusive.")
-      if (cv.n <= 0) stop("cv.n must be > 0.")
-      if (cv.n %% 1 != 0) stop("cv.n must be an integer.")
+
+      # Check if cv.n is a positive integer
+      check_positive_integer(cv.n, var_name = "cv.n")
+
 
       # Check control values for balance.split
       if (any(c(error.max, max.iter) <= 0)) stop("error.max and max.iterNR must be > 0.")
     }
   } else if (fun == "drinf") {
-    # Check n.boot positive
-    if (n.boot <= 0) stop("n.boot must be > 0.")
+    # Check if n.boot is a positive integer
+    check_positive_integer(n.boot, var_name = "n.boot")
 
-    # Check plot.boot boolean
-    if (!(plot.boot %in% c(TRUE, FALSE))) stop("plot.boot has to be boolean.")
+    # Check if plot.boot is a boolean
+    check_boolean(plot.boot, "plot.boot")
   }
 }
 
@@ -158,9 +160,9 @@ arg.checks.common <- function(fun,
 #' \code{'lasso'} for a logistic regression with main effects and LASSO penalization on
 #' two-way interactions (added to the model if interactions are not specified in \code{ps.model}).
 #' Relevant only when \code{ps.model} has more than one variable.
-#' @param minPS A numerical value (in [0, 1]) below which estimated propensity scores should be
+#' @param minPS A numerical value (in `[0, 1]`) below which estimated propensity scores should be
 #' truncated. Default is \code{0.01}.
-#' @param maxPS A numerical value (in (0, 1]) above which estimated propensity scores should be
+#' @param maxPS A numerical value (in `(0, 1]`) above which estimated propensity scores should be
 #' truncated. Must be strictly greater than \code{minPS}. Default is \code{0.99}.
 #' @param higher.y A logical value indicating whether higher (\code{TRUE}) or lower (\code{FALSE})
 #' values of the outcome are more desirable. Default is \code{TRUE}.
@@ -169,19 +171,19 @@ arg.checks.common <- function(fun,
 #' \code{'negBin'}. Default specifies all 5 methods.
 #' @param abc A logical value indicating whether the area between curves (ABC) should be calculated
 #' at each cross-validation iterations, for each \code{score.method}. Default is \code{TRUE}.
-#' @param prop.cutoff A vector of numerical values (in (0, 1]) specifying percentiles of the
+#' @param prop.cutoff A vector of numerical values (in `(0, 1]`) specifying percentiles of the
 #' estimated log CATE scores to define nested subgroups. Each element represents the cutoff to
 #' separate observations in nested subgroups (below vs above cutoff).
 #' The length of \code{prop.cutoff} is the number of nested subgroups.
 #' An equally-spaced sequence of proportions ending with 1 is recommended.
 #' Default is \code{seq(0.5, 1, length = 6)}.
-#' @param prop.multi A vector of numerical values (in [0, 1]) specifying percentiles of the
+#' @param prop.multi A vector of numerical values (in `[0, 1]`) specifying percentiles of the
 #' estimated log CATE scores to define mutually exclusive subgroups.
 #' It should start with 0, end with 1, and be of \code{length(prop.multi) > 2}.
 #' Each element represents the cutoff to separate the observations into
 #' \code{length(prop.multi) - 1} mutually exclusive subgroups.
 #' Default is \code{c(0, 1/3, 2/3, 1)}.
-#' @param train.prop A numerical value (in (0, 1)) indicating the proportion of total data used
+#' @param train.prop A numerical value (in `(0, 1)`) indicating the proportion of total data used
 #' for training. Default is \code{3/4}.
 #' @param cv.n A positive integer value indicating the number of cross-validation iterations.
 #' Default is \code{10}.
@@ -268,32 +270,36 @@ arg.checks <- function(fun, response, data,
   if (response == "count") {
     # Check initial predictor method
     if (is.null(initial.predictor.method) == FALSE) {
-      if (!(initial.predictor.method %in% c("poisson", "boosting", "gam"))) stop("initial.predictor.method must be 'poisson', 'boosting' or 'gam'.")
+      if (!(initial.predictor.method %in% c("poisson", "boosting", "gam")))
+        stop("initial.predictor.method must be 'poisson', 'boosting' or 'gam'.")
     }
 
     # Check values of score.method
-    if (any(!(score.method %in% c("boosting", "poisson", "twoReg", "contrastReg", "negBin")))) stop("Elements of score.method must come from: 'boosting', 'poisson', 'twoReg', 'contrastReg', 'negBin'.")
+    if (any(!(score.method %in% c("boosting", "poisson", "twoReg", "contrastReg", "negBin"))))
+      stop("Elements of score.method must come from: 'boosting', 'poisson', 'twoReg', 'contrastReg', 'negBin'.")
 
     if (fun == "drinf") {
-      # Check interactions boolean
-      if (!(interactions %in% c(TRUE, FALSE))) stop("interactions has to be boolean.")
+      check_boolean(interactions, "interactions")
     }
   }
 
   #### Check argument only used for survival outcome ####
   if (response == "survival") {
-    # Check if followup.time is either NULL or a column name of the data
-    if (!is.null(followup.time)) {
-      if (!as.character(followup.time) %in% names(data)) stop("followup.time must be either NULL or one of the column names of data.")
+
+    # Check if followup.time is either NULL or a valid column name in the data
+    if (!is.null(followup.time) && !as.character(followup.time) %in% names(data)) {
+      stop("followup.time must be either NULL or a valid column name in the data.")
     }
 
     # Check if tau0 > 0
-    if (is.null(tau0) == FALSE) {
-      if (tau0 <= 0) stop("tau0 must be positive.")
+    if (!is.null(tau0) && tau0 <= 0) {
+      stop("tau0 must be positive.")
     }
 
-    # Check if surv.min is positive and very close to 0
-    if (!(surv.min > 0 & surv.min < 0.1)) stop("surv.min must be positive and close to 0.")
+    # Check if surv.min is positive and within the acceptable range (0, 0.1)
+    if (surv.min <= 0 || surv.min >= 0.1)
+      stop("surv.min must be positive and less than 0.1.")
+
 
     # Check n.trees.rf
     if (any(c(n.trees.rf) <= 0)) stop("n.trees.rf must be > 0.")
@@ -324,13 +330,13 @@ arg.checks <- function(fun, response, data,
 #' coded as 0/1. If data are from a RCT, specify \code{ps.model} as an intercept-only model.
 #' @param data A data frame containing the variables in the outcome and propensity score models;
 #' a data frame with \code{n} rows (1 row per observation).
-#' @param prop.cutoff A vector of numerical values (in (0, 1]) specifying percentiles of the
+#' @param prop.cutoff A vector of numerical values (in `(0, 1]`) specifying percentiles of the
 #' estimated log CATE scores to define nested subgroups. Each element represents the cutoff to
 #' separate observations in nested subgroups (below vs above cutoff).
 #' The length of \code{prop.cutoff} is the number of nested subgroups.
 #' An equally-spaced sequence of proportions ending with 1 is recommended.
 #' Default is \code{seq(0.5, 1, length = 6)}.
-#' @param prop.multi A vector of numerical values (in [0, 1]) specifying percentiles of the
+#' @param prop.multi A vector of numerical values (in `[0, 1]`) specifying percentiles of the
 #' estimated log CATE scores to define mutually exclusive subgroups.
 #' It should start with 0, end with 1, and be of \code{length(prop.multi) > 2}.
 #' Each element represents the cutoff to separate the observations into
@@ -453,4 +459,84 @@ data.preproc <- function(fun, cate.model, ps.model, data, prop.cutoff = NULL,
 }
 
 
+#' Compute the area under the curve using linear or natural spline interpolation
+#'
+#' This function computes the area under the curve for two vectors where one
+#' corresponds to the x values and the other corresponds to the y values.
+#' It supports both linear and spline interpolation.
+#'
+#'
+#' @param x A numeric vector of x values.
+#' @param y A numeric vector of y values of the same length as x.
+#' @param from The value from where to start calculating the area under the curve.
+#' Defaults to the smallest x value.
+#' @param to The value from where to end the calculation of the area under the curve.
+#' Defaults to the greatest x value.
+#' @param type The type of interpolation: "linear" or "spline".
+#' Defaults to "linear".
+#' @param subdivisions An integer indicating how many subdivisions to use for `integrate`
+#' (for spline-based approximations).
+#' @param ... Additional arguments passed on to `approx` (for linear interpolations).
+#' @return A numeric value representing the area under the curve.
+#'
+#' @importFrom stats approx integrate splinefun
+#' @export
+auc <- function(x, y, from = min(x, na.rm = TRUE), to = max(x, na.rm = TRUE),
+                type = c("linear", "spline"), subdivisions = 100, ...)
+{
+  type <- match.arg(type)
+  stopifnot(length(x) == length(y))
+  stopifnot(!is.na(from))
+  if (length(unique(x)) < 2)
+    return(NA)
+  if (type == "linear") {
+    # Use approx for linear interpolation
+    values <- approx(x, y, xout = sort(unique(c(from, to, x[x > from & x < to]))), ...)
+    res <- 0.5 * sum(diff(values$x) * (values$y[-1] + values$y[-length(values$y)]))
+  } else {
+    # Use spline interpolation
+    myfunction <- splinefun(x, y, method = "natural")
+    res <- integrate(myfunction, lower = from, upper = to, subdivisions = subdivisions)$value
+  }
 
+  return(res)
+}
+
+check_positive_integer <- function(x, var_name = "value") {
+  if (!is.numeric(x) || x <= 0 || x %% 1 != 0) {
+    stop(paste(var_name, "must be a positive integer."))
+  }
+}
+
+check_boolean <- function(x, var_name = "value") {
+  if (!is.logical(x) || length(x) != 1) {
+    stop(paste(var_name, "must be a boolean (TRUE or FALSE)."))
+  }
+}
+
+#' Generate K-fold Indices for Cross-Validation
+#'
+#' This function generates indices for K-fold cross-validation based on the total sample size `N` and the number of folds `Kfold`.
+#' If `reverse = TRUE`, the remainder indices will be assigned in reverse order.
+#'
+#' @param N Integer. Total sample size (number of observations).
+#' @param Kfold Integer. The number of folds to split the data into.
+#' @param reverse Logical. Whether to reverse the remainder indices when `N` is not divisible by `Kfold`. Defaults to `FALSE`.
+#'
+#' @author Thomas Debray
+#' @return A vector of length `N` containing the fold assignments (from 1 to `Kfold`).
+generate_kfold_indices <- function(N, Kfold, reverse = FALSE) {
+  base_index <- rep(seq(Kfold), floor(N / Kfold))  # Base repeated sequence
+  remainder <- N %% Kfold                        # Calculate the remainder
+
+  if (remainder > 0) {
+    additional_index <- if (reverse) {
+      rev(seq(remainder))                         # Reverse the remainder for index0
+    } else {
+      seq(remainder)                              # Normal order for index1
+    }
+    base_index <- c(base_index, additional_index)
+  }
+
+  return(base_index)
+}
